@@ -1,0 +1,58 @@
+  .tabs_wrapper {
+    width: 100%;
+   }
+  
+  .tabs {
+    display: flex;
+    font-size: 14px;
+    font-weight: 600;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .tabitem {
+    position: relative;
+    padding: 8px 16px;
+  }
+  .tabitem::before{
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 3px;
+      border-radius: 3px;
+      background:#a16eff;
+  }
+
+  .tabitem.active::before{
+      width: calc(100% - 1px);
+  }
+
+  .tabitem:hover::before{
+      width: calc(100% - 1px);
+      transition: all 0.5s;
+
+  }
+  .tabitem:hover .tabitem__title{
+    color: #a16eff;
+  }
+  .tabitem .tabitem__title{
+      cursor: pointer;
+      color: #b4b4db;
+      text-decoration: none;
+    }
+    
+   .tabitem.active .tabitem__title {
+      color: #a16eff;
+    }
+  
+  .tabs_content {
+    font-family: Open Sans,sans-serif;
+    color: #fff;
+    font-size: .9375rem;
+    font-weight: 400;
+    line-height: 1.25rem;
+    padding: 2rem 0;
+  }

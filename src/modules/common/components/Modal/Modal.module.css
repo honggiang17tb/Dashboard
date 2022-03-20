@@ -1,0 +1,87 @@
+/* The Modal (background) */
+.modal {
+    position: fixed; 
+    z-index: 999; 
+    left: 0;
+    top: 0;
+    width: 100%; 
+    height: 100%; 
+    overflow: auto; 
+    background-color: rgba(0,0,0,0.4); 
+  }
+  
+  /* Modal Content/Box */
+  .modal_content {
+    width: 400px;
+    margin: 15% auto;
+    color: #fff;
+    background-color: #323259;
+    border-radius: 0.25rem;
+    border: 0.0625rem solid #13132b;
+    box-shadow: none;
+    font-size: .9375rem;
+    font-weight: 400;
+    line-height: 1.25rem;
+    font-family: Open Sans,sans-serif;
+  }
+  
+  .modal_title{
+      display: flex;
+      align-items: center;
+      padding: 1rem 1.5rem;
+      border-bottom: 1px solid #1b1b38;
+  }
+
+  .modal_body{
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid #1b1b38;
+  }
+
+  .modal_actions{
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem 1.5rem;
+  }
+
+
+  .btn_confirm{
+    font-size: .875rem;
+    line-height: 1rem;
+    color: #fff;
+    border: none;
+    padding: 0.55rem 1.1875rem;
+    background-image: linear-gradient(90deg,#b18aff,#a16eff);
+    border-radius: 0.25rem;
+    box-shadow: 0 0 0 0 #7b51db, 0 0 0 0 #5a37b8, 0 0 transparent;
+  }
+  .btn_cancel{
+    font-size: .875rem;
+    line-height: 1rem;
+    color: #fff;
+    border: none;
+    padding: 0.55rem 1.1875rem;
+    background-image: linear-gradient(90deg,#ff708d,#ff3d71);
+    border-radius: 0.25rem;
+    box-shadow: 0 0 0 0 #db2c66, 0 0 0 0 #b81d5b, 0 0 transparent;
+  }
+  .btn_confirm:hover{
+    background-image: linear-gradient(90deg,#d5bfff,#b18aff);
+  }
+  .btn_cancel:hover{
+    background-image: linear-gradient(90deg,#ffa8b4,#ff708d);
+  }
+
+  /* The Close Button */
+  .close {
+    color: #aaa;
+    margin-left: auto;
+    font-size: 28px;
+    font-weight: bold;
+  }
+  
+  .close:hover,
+  .close:focus {
+    color: #fff;
+    text-decoration: none;
+    cursor: pointer;
+  }

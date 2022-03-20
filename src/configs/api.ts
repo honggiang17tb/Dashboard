@@ -27,5 +27,13 @@ export const API_PROJECT = {
   login : `https://api.gearfocus.div4.pgtest.co/api/authentication/login`,
   categories : `https://api.gearfocus.div4.pgtest.co/api/categories/list`,
   brands : `https://api.gearfocus.div4.pgtest.co/apiAdmin/brands/list`,
-  userList : `https://api.gearfocus.div4.pgtest.co/apiAdmin/users/list`
+
+  userList : `https://api.gearfocus.div4.pgtest.co/apiAdmin/users/list`,
+  userCreate:`https://api.gearfocus.div4.pgtest.co/apiAdmin/users/create`,
+  userDetails:`https://api.gearfocus.div4.pgtest.co/apiVendor/profile/detail`,
+  userUpdate:`https://api.gearfocus.div4.pgtest.co/apiAdmin/users/edit`,
+  userDelete:`https://api.gearfocus.div4.pgtest.co/apiAdmin/users/edit`,
+
+  productList:`https://api.gearfocus.div4.pgtest.co/api/products/list`,
+  productDetails:`https://api.gearfocus.div4.pgtest.co/apiAdmin/products/detail`
 }

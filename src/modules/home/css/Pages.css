@@ -1,0 +1,197 @@
+/* Filter   */
+
+.filter{
+    position: relative;         
+    padding: 20px 20px 0;
+    margin-bottom: 40px;
+    border: 1px solid #13132b;
+    background: #323259;
+    font-size: .9375rem;
+}
+.filter>ul{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    list-style: none;
+    margin: 0 0 20px;
+    padding: 0;
+}
+.filter input[type=text]{
+    width: 100%;
+    padding: 7px 16px;
+    font-size: .9375rem;
+    font-weight: 400;
+    line-height: 1.5rem;
+    color: #fff;
+    background-color: #252547;
+    border: 1px solid #13132b;
+    outline: none;
+}
+.filter input[type=text]:focus{
+    background-color: #323259;
+    border-color: #a16eff;
+}
+.filter input[type=text]:hover{
+    background-color: #1b1b38;
+}
+
+.filter select{
+    width: 100%;
+    height: 40px;
+    border: 1px solid #13132b;
+    background-color: #252547;
+    padding: 7px 18px;
+    border-radius: 0.25rem;
+    color: #fff;
+    font-size: .9375rem;
+    font-weight: 600;
+    line-height: 1.5rem;
+}
+.filter select:hover{
+    background-color: #1b1b38;
+    cursor: pointer;
+}
+
+.filter .btn-search:hover{
+    color: #212529;
+}
+
+.hidden::before{
+    content: "";
+    border-top: 1px solid #13132b;
+    position: absolute;
+    left: 0;
+    right: 0;
+}
+
+/* Hidden Filter Product */
+.hidden.filter_product .filter_conditions {
+    display: flex;
+    align-items: flex-start;
+    list-style: none;
+    padding: 0;
+}
+.hidden.filter_product .filter_conditions>li {
+    margin-top: 20px;
+    margin-right:40px ;
+}
+
+.hidden.filter_product .filter_conditions .search_in{
+    display: flex;
+}
+.hidden.filter_product .filter_conditions .search_in ul{
+    list-style: none;
+}
+.hidden.filter_product .filter_conditions .search_in label{
+    margin: 0 0 8px 5px;
+}
+
+.hidden.filter_product .filter_conditions .availability label{
+    margin: 0 15px 8px 0;
+}
+
+.hidden.filter_product .filter_conditions .vendor label{
+    margin: 0 15px 8px 0;
+}
+.hidden.filter_product .filter_conditions .vendor input{
+    border-radius: 5px;
+}
+
+/* Hidden Filter User */
+.hidden.filter_user .filter_conditions {
+    display: flex;
+    align-items: flex-start;
+    list-style: none;
+    padding: 0;
+}
+.hidden.filter_user .filter_conditions .by_userInfo{
+    margin-top: 20px;
+    margin-right: 40px;
+}
+.hidden.filter_user .filter_conditions .by_userInfo ul{
+    list-style: none;
+    padding: 0;
+}
+.hidden.filter_user .filter_conditions .by_userInfo ul li{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+    font-size: 13px;
+}
+.hidden.filter_user .filter_conditions .by_userInfo ul li input{
+    border-radius: 5px;
+}
+.hidden.filter_user .filter_conditions .by_userInfo ul li label{
+    min-width: 60px;
+}
+
+.hidden.filter_user .filter_conditions .by_userActivity{
+    margin-top: 20px;
+    margin-right: 40px;
+}
+
+
+/* Arrow */
+
+.arrow{
+    position: absolute;
+    bottom: -21px;
+    width: 58px;
+    height: 21px;
+    left: 50%;
+    transform: translateX(-50%);
+    cursor: pointer;
+    border: 1px solid #13132b;
+    border-top: none;
+    border-radius: 0 0 5px 5px;
+    background: #323259 url('https://admin.gearfocus.div4.pgtest.co/arrow_search.e9a03c6807837ca994f8.png') center 4px no-repeat;
+}
+.arrow[aria-expanded=true]{
+    background-position: center -16px;
+}
+
+
+/* Table */
+
+.table-list{
+    background: #323259;
+    max-width: 100%;
+    width: 100%;
+    border: 1px solid #13132b;
+  }
+  .table-list thead th {
+    padding: 16px 18px;
+    font-size: 15px;
+    color: #fff;
+    white-space: nowrap;
+  }
+  .table-list .lines td {
+    font-size: 14px;
+    padding: 10px 17px;
+    white-space: nowrap;
+    background-color: #323259;
+    border-top: 1px solid #13132b;
+    min-height: 80px;
+  }
+
+  .table-list td.cell.actions .left{
+    display: flex;
+    align-items: center;
+    border-right: 1.5px dashed #bbb;
+  }
+
+  .table-list td.cell.actions .left .action-update{ 
+    line-height: 1;
+    padding: 0 10px;
+    border-left: 1px solid #ddd;
+    cursor: pointer;
+    font-size: 16px;
+    color: #72b25b;;
+  }
+
+  .table-list td.cell.actions .right{
+    border-left: 1.5px dashed #bbb;
+    padding-left: 10px;
+  }
+  

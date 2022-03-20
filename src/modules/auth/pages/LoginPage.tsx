@@ -1,20 +1,17 @@
-import React, { useState } from 'react';
-import LoginForm from '../components/LoginForm';
-import logo from '../../../logo-420-x-108.png';
-import { ILoginParams } from '../../../models/auth';
-import { useDispatch } from 'react-redux';
-import { ThunkDispatch } from 'redux-thunk';
-import { AppState } from '../../../redux/reducer';
-import { Action } from 'redux';
-import { fetchThunk } from '../../common/redux/thunk';
-import { API_PATHS,API_PROJECT } from '../../../configs/api';
-import { RESPONSE_STATUS_SUCCESS } from '../../../utils/httpResponseCode';
-import { setUserInfo } from '../redux/authReducer';
-import Cookies from 'js-cookie';
-import { ACCESS_TOKEN_KEY } from '../../../utils/constants';
-import { ROUTES } from '../../../configs/routes';
 import { replace } from 'connected-react-router';
-import { getErrorMessageResponse } from '../../../utils';
+import Cookies from 'js-cookie';
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { Action } from 'redux';
+import { ThunkDispatch } from 'redux-thunk';
+import { API_PROJECT } from '../../../configs/api';
+import { ROUTES } from '../../../configs/routes';
+import { ILoginParams } from '../../../models/auth';
+import { AppState } from '../../../redux/reducer';
+import { ACCESS_TOKEN_KEY } from '../../../utils/constants';
+import { fetchThunk } from '../../common/redux/thunk';
+import LoginForm from '../components/LoginForm';
+import { setUserInfo } from '../redux/authReducer';
 
 const LoginPage = () => {
   const dispatch = useDispatch<ThunkDispatch<AppState, null, Action<string>>>();
@@ -33,9 +30,12 @@ const LoginPage = () => {
       setLoading(false);
 
       if (json?.success) {
-        dispatch(setUserInfo(json.user));
+        dispatch(setUserInfo({
+          user: json.user,
+          user_cookie: json.user_cookie
+        }));
         Cookies.set(ACCESS_TOKEN_KEY, json.user_cookie, { expires: 7 });
-        dispatch(replace(ROUTES.home));
+        dispatch(replace(ROUTES.user));
         return;
       }
 
@@ -56,7 +56,7 @@ const LoginPage = () => {
 
       }}
     >
-        <LoginForm onLogin={onLogin} loading={loading} errorMessage={errorMessage} />
+      <LoginForm onLogin={onLogin} loading={loading} errorMessage={errorMessage} />
 
     </div>
   );

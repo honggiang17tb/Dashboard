@@ -7,13 +7,13 @@ import intlReducer, { IntlState } from '../modules/intl/redux/intlReducer';
 export interface AppState {
   router: RouterState;
   intl: IntlState;
-  profile: AuthState;
+  auth: AuthState;
 }
 
 export default function createRootReducer(history: History) {
   return combineReducers({
     router: connectRouter(history),
     intl: intlReducer,
-    profile: authReducer,
+    auth: authReducer,
   });
 }

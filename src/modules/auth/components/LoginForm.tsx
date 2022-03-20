@@ -2,6 +2,7 @@ import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { ILoginParams, ILoginValidation } from '../../../models/auth';
 import { validateEmail, validatePassword, validateLogin, validLogin } from '../utils';
+import Loading from '../../common/components/Loading/Loading';
 
 interface Props {
   onLogin(values: ILoginParams): void;
@@ -66,7 +67,6 @@ const LoginForm = (props: Props) => {
           onBlur={() => {
             const validEmail= validateEmail(formValues.email)
             setValidate(validate=>{
-              console.log(validate);
               return {email:validEmail,password:validate?.password}
             })
           }}
@@ -118,7 +118,7 @@ const LoginForm = (props: Props) => {
             style={{ minWidth: '160px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
             disabled={loading}
           >
-            {loading && <div className="spinner-border spinner-border-sm text-light mr-2" role="status" />}
+            {loading && <Loading></Loading>}
             <i className="fa-solid fa-right-to-bracket" style={{marginRight:'4px'}}></i>
             <FormattedMessage id="register" />
           </button>
