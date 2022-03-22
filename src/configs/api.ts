@@ -35,5 +35,8 @@ export const API_PROJECT = {
   userDelete:`https://api.gearfocus.div4.pgtest.co/apiAdmin/users/edit`,
 
   productList:`https://api.gearfocus.div4.pgtest.co/api/products/list`,
-  productDetails:`https://api.gearfocus.div4.pgtest.co/apiAdmin/products/detail`
+  productCreate:`https://api.gearfocus.div4.pgtest.co/apiAdmin/products/create`,
+  productDetails:`https://api.gearfocus.div4.pgtest.co/apiAdmin/products/detail`,
+  productUpdate:`https://api.gearfocus.div4.pgtest.co/apiAdmin/products/create`,
+  productDelete:`https://api.gearfocus.div4.pgtest.co/apiAdmin/products/edit`,
 }

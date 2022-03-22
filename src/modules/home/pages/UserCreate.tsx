@@ -6,8 +6,8 @@ import { ThunkDispatch } from 'redux-thunk';
 import { API_PROJECT } from '../../../configs/api';
 import { ROUTES } from '../../../configs/routes';
 import { AppState } from '../../../redux/reducer';
-import Loading from '../../common/components/Loading/Loading';
 import { fetchThunk } from '../../common/redux/thunk';
+import Loading from '../../common/components/Loading/Loading';
 import Select from "../../common/components/Select/Select";
 
 

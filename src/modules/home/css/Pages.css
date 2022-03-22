@@ -175,6 +175,10 @@
     min-height: 80px;
   }
 
+  .table-list .lines tr.toDelete{
+    opacity: 0.6;
+  }
+
   .table-list td.cell.actions .left{
     display: flex;
     align-items: center;

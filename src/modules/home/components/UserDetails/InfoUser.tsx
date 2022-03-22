@@ -36,7 +36,7 @@ const InfoUser = ({ data }: Props) => {
                 }
             ]
         })
-    console.log(valueUpdate);
+
 
     const dispatch = useDispatch<ThunkDispatch<AppState, null, Action<string>>>();
     const [loading, setLoading] = useState(false)

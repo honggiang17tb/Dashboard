@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ROUTES } from "../../../../configs/routes";
 import { useDispatch } from 'react-redux';
 import { replace } from 'connected-react-router';
@@ -19,11 +19,15 @@ interface Props {
 interface DataProps {
     datas: Array<Props> | undefined
     loading: boolean
+    setValueDelete: React.Dispatch<React.SetStateAction<any>>
+    setValueExport: React.Dispatch<React.SetStateAction<any>>
 }
 const TableProduct = (props: DataProps) => {
-    const { datas, loading } = props
+    const { datas, loading, setValueDelete, setValueExport } = props
     const dispatch = useDispatch()
     const [selected, setSelected] = React.useState<readonly string[]>([]);
+    const [selectDelete, setSelectDelete] = React.useState<readonly string[]>([]);
+
 
     const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
         if (event.target.checked) {
@@ -34,31 +38,68 @@ const TableProduct = (props: DataProps) => {
         setSelected([]);
     };
 
-    const handleSelect = (event: React.MouseEvent<unknown>, id: string) => {
-        const selectedIndex = selected.indexOf(id);
-        let newSelected: readonly string[] = [];
+    const handleSelect = (event: React.MouseEvent<unknown>, id: string, isBtnDel: boolean) => {
+        if (isBtnDel) {
+            const selectedIndex = selectDelete.indexOf(id);
+            let newSelected: readonly string[] = [];
 
-        if (selectedIndex === -1) {
-            newSelected = newSelected.concat(selected, id);
-        } else if (selectedIndex === 0) {
-            newSelected = newSelected.concat(selected.slice(1));
-        } else if (selectedIndex === selected.length - 1) {
-            newSelected = newSelected.concat(selected.slice(0, -1));
-        } else if (selectedIndex > 0) {
-            newSelected = newSelected.concat(
-                selected.slice(0, selectedIndex),
-                selected.slice(selectedIndex + 1),
-            );
+            if (selectedIndex === -1) {
+                newSelected = newSelected.concat(selectDelete, id);
+            } else if (selectedIndex === 0) {
+                newSelected = newSelected.concat(selectDelete.slice(1));
+            } else if (selectedIndex === selected.length - 1) {
+                newSelected = newSelected.concat(selectDelete.slice(0, -1));
+            } else if (selectedIndex > 0) {
+                newSelected = newSelected.concat(
+                    selectDelete.slice(0, selectedIndex),
+                    selectDelete.slice(selectedIndex + 1),
+                );
+            }
+            setSelectDelete(newSelected)
         }
+        else {
+            const selectedIndex = selected.indexOf(id);
+            let newSelected: readonly string[] = [];
 
-        setSelected(newSelected);
+            if (selectedIndex === -1) {
+                newSelected = newSelected.concat(selected, id);
+            } else if (selectedIndex === 0) {
+                newSelected = newSelected.concat(selected.slice(1));
+            } else if (selectedIndex === selected.length - 1) {
+                newSelected = newSelected.concat(selected.slice(0, -1));
+            } else if (selectedIndex > 0) {
+                newSelected = newSelected.concat(
+                    selected.slice(0, selectedIndex),
+                    selected.slice(selectedIndex + 1),
+                );
+            }
+            setSelected(newSelected)
+        }
     };
 
+
+
     const isSelected = (id: string) => selected.indexOf(id) !== -1;
+    const willDelete = (id: string) => {
+        return selectDelete.indexOf(id) !== -1 ? "toDelete" : ''
+    }
 
-    const handleDelete = () => { }
+    const handleDelete = (event: any, id: any) => {
+        handleSelect(event, id, true)
+    }
 
-    const handleAdd = () => { }
+    useEffect(() => {
+        setValueDelete({
+            params: selectDelete.map((item) => {
+                return { id: item, delete: 1 }
+            })
+        })
+    }, [selectDelete])
+
+    useEffect(() => {
+        setValueExport(selected)
+    }, [selected])
+
 
     return (
         <table className="table-list">
@@ -77,12 +118,13 @@ const TableProduct = (props: DataProps) => {
             <tbody className="lines">
                 {loading ? <Loading /> : datas?.slice(0, 10).map((data) => {
                     const isItemSelected = isSelected(data.id);
+                    const toDelete = willDelete(data.id);
                     return (
-                        <tr key={data.id} >
+                        <tr key={data.id} className={toDelete}>
                             <td className="cell actions">
                                 <div className="left">
                                     <div className="pe-2">
-                                        <input type='checkbox' onClick={(event) => handleSelect(event, data.id)} readOnly checked={isItemSelected} />
+                                        <input type='checkbox' onClick={(event) => handleSelect(event, data.id, false)} readOnly checked={isItemSelected} />
                                     </div>
                                     <div className="action-update">
                                         <i className="fa fa-power-off"></i>
@@ -102,7 +144,7 @@ const TableProduct = (props: DataProps) => {
                             <td className="cell">{moment(Number(data.arrivalDate)).format('MMM D, YYYY')}</td>
                             <td className="cell actions">
                                 <div className="right">
-                                    <button className="btn btn-default" onClick={handleDelete}><i className="fa-solid fa-trash"></i></button>
+                                    <button className="btn btn-default" onClick={(event) => handleDelete(event, data.id)}><i className="fa-solid fa-trash"></i></button>
                                 </div>
                             </td>
                         </tr>

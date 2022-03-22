@@ -14,14 +14,11 @@ import Modal from '../../common/components/Modal/Modal';
 
 
 function UserPage() {
-    const [data, setData] = useState()
+    const [data, setData] = useState<any>()
     const [loading, setLoading] = useState(false)
     const [openModal, setOpenModal] = useState(false)
     const [valueDelete,setValueDelete] = useState({"params":[]})
 
-
-    console.log(valueDelete.params.length);
-    console.log(valueDelete);
     const [valueSearch, setValueSearch] = useState({
         page: 1,
         count: 5,
@@ -90,7 +87,7 @@ function UserPage() {
             {openModal &&
                 <Modal
                     title='Confirm Delete'
-                    content='Do you want to delete this user?'
+                    content={`Do you want to delete ${valueDelete.params.length > 1 ? 'these users ?' : 'this user ?' }`}
                     setOpen={setOpenModal}
                     handleConfirm={confirmRemove}
                 />}
