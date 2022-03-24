@@ -170,9 +170,8 @@
     font-size: 14px;
     padding: 10px 17px;
     white-space: nowrap;
-    background-color: #323259;
     border-top: 1px solid #13132b;
-    min-height: 80px;
+    min-height: 60px;
   }
 
   .table-list .lines tr.toDelete{
@@ -191,11 +190,89 @@
     border-left: 1px solid #ddd;
     cursor: pointer;
     font-size: 16px;
-    color: #72b25b;;
+    color: #fff;
+  }
+  .table-list td.cell.actions .left .action-update.enabled{
+    color: #72b25b;
   }
 
   .table-list td.cell.actions .right{
     border-left: 1.5px dashed #bbb;
     padding-left: 10px;
   }
-  
+
+  .custom-width{
+      display: flex;
+      align-items: center;
+      width: 300px;
+      overflow: hidden;
+  }
+  .editable {  
+      color: #fff;
+      border-radius: 3px;
+      width: 60px;
+      height: 30px;
+      border: none;
+      outline: none;
+      background: transparent;
+      cursor: pointer;
+  }
+  .editable:focus{
+      color: #13132b;
+      background-color: #fff;
+  }
+
+   .table-list .lines tr:hover .editable:not(:focus){
+      background: #a16eff;
+  }
+
+
+  /* Pagination */
+  .pagination{
+      padding: 20px;
+      background: #323259;
+      font-size: 0.9375rem;
+  }
+  .pagination ul{
+      display: flex;
+      list-style: none;
+      padding: 0;
+      margin: 0;
+  }
+  .pagination li{
+    display: inline-block;
+    border: 1px solid #13132b;
+    margin: 0 0 0 -1px!important;
+    padding: 0;
+    text-align: center;
+    text-decoration: none;
+    background: #323259;
+}
+.pagination li.selected{
+    background: #b18aff;
+}
+.pagination li a{
+    line-height: 32px;
+    padding: 6px 14px;
+}
+.pagination .icon-angles{
+    color: #fff;
+    font-size: 8px;
+    margin-bottom: 3px;
+}
+
+.pagination_tooltip{
+    display: flex;
+    align-items: center;
+    margin-left: 16px;
+}
+.pagination_tooltip select{
+    width: 70px;
+    outline: none;
+    padding: 3px 10px;
+    border: none;
+    outline: none;
+    color: #fff;
+    background:#a16eff;
+}
+

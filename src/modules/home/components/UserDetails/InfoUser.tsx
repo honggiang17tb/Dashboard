@@ -10,6 +10,7 @@ import { fetchThunk } from '../../../common/redux/thunk';
 import Loading from '../../../common/components/Loading/Loading';
 import Select from "../../../common/components/Select/Select";
 import MultipleSelect from "../../../common/components/Select/MultipleSelect";
+import { toast ,Slide} from 'react-toastify';
 
 interface Props {
     data?: any
@@ -47,13 +48,17 @@ const InfoUser = ({ data }: Props) => {
             fetchThunk(API_PROJECT.userUpdate, 'post', valueUpdate),
         );
         if (json?.success) {
-
-
-            console.log('OK')
             setLoading(false)
+            toast.success('Successful', {
+                position: "top-right",
+                autoClose: 3000,
+                theme: "colored",
+                transition: Slide
+            });
         }
     }
 
+    
     const { E, D, U } = data.data.account_status
     const list_status = [
         { title: E, value: 'E' },

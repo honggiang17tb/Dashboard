@@ -5,8 +5,6 @@ import { replace } from 'connected-react-router';
 import moment from 'moment'
 import Loading from "../../../common/components/Loading/Loading";
 
-
-
 interface Props {
     id: string,
     email: string,
@@ -22,10 +20,10 @@ interface Props {
 interface DataProps {
     datas: Array<Props> | undefined
     loading: boolean
-    setValueDelete:React.Dispatch<React.SetStateAction<any>>
+    setValueDelete: React.Dispatch<React.SetStateAction<any>>
 }
 const TableUser = (props: DataProps) => {
-    const { datas, loading ,setValueDelete} = props
+    const { datas, loading, setValueDelete } = props
     const dispatch = useDispatch()
     const [selected, setSelected] = React.useState<readonly string[]>([]);
 
@@ -65,17 +63,16 @@ const TableUser = (props: DataProps) => {
         handleSelect(event, id)
     }
 
-    const handleAdd = () => { }
-
-
-    useEffect(()=>{
-        setValueDelete({params:selected.map((item)=>{
-            return {id:item,delete:1}
-        })})
-    },[selected])
+    useEffect(() => {
+        setValueDelete({
+            params: selected.map((item) => {
+                return { id: item, delete: 1 }
+            })
+        })
+    }, [selected])
 
     return (
-        <>
+        <div style={{ overflowX: 'auto' }}>
             <table className="table-list">
                 <thead>
                     <tr>
@@ -91,10 +88,10 @@ const TableUser = (props: DataProps) => {
                     </tr>
                 </thead>
                 <tbody className="lines">
-                    {loading ? <Loading /> : datas?.slice(0, 10).map((data) => {
+                    {loading ? <Loading /> : datas?.map((data) => {
                         const isItemSelected = isSelected(data.id);
                         return (
-                            <tr key={data.id} >
+                            <tr key={data.id} className={isItemSelected ? 'toDelete' : ''}>
                                 <td className="cell actions">
                                     <div className="left pe-2">
                                         <input type='checkbox' onClick={(event) => handleSelect(event, data.id)} readOnly checked={isItemSelected} />
@@ -124,7 +121,8 @@ const TableUser = (props: DataProps) => {
 
                 </tbody>
             </table>
-        </>
+
+        </div>
 
     )
 }

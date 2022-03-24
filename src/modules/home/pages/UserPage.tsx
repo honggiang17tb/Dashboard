@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Action } from 'redux';
 import { replace } from 'connected-react-router';
@@ -8,37 +8,41 @@ import { AppState } from '../../../redux/reducer';
 import { fetchThunk } from '../../common/redux/thunk';
 import TableUser from '../components/User/TableUser';
 import UserFilter from '../components/User/UserFilter';
-import '../css/Pages.css';
 import { ROUTES } from '../../../configs/routes';
 import Modal from '../../common/components/Modal/Modal';
+import ReactPaginate from 'react-paginate';
+
+import '../css/Pages.css';
 
 
 function UserPage() {
     const [data, setData] = useState<any>()
     const [loading, setLoading] = useState(false)
     const [openModal, setOpenModal] = useState(false)
-    const [valueDelete,setValueDelete] = useState({"params":[]})
+    const [valueDelete, setValueDelete] = useState({ "params": [] })
 
+    const [record,setRecord] = useState<any>()
+    const [totalPage,setTotalPage] = useState<any>()
     const [valueSearch, setValueSearch] = useState({
-        page: 1,
-        count: 5,
-        search: "",
-        memberships: [
+        "page": 1,
+        "count": 5,
+        "search": "",
+        "memberships": [
         ],
-        types: [
+        "types": [
         ],
-        status: [
+        "status": [
         ],
-        country: "",
-        state: "",
-        address: "",
-        phone: "",
-        date_type: "R",
-        date_range: [
+        "country": "",
+        "state": "",
+        "address": "",
+        "phone": "",
+        "date_type": "R",
+        "date_range": [
         ],
-        sort: "last_login",
-        order_by: "DESC",
-        tz: 7
+        "sort": "last_login",
+        "order_by": "DESC",
+        "tz": 7
     })
 
     const dispatch = useDispatch<ThunkDispatch<AppState, null, Action<string>>>();
@@ -47,6 +51,8 @@ function UserPage() {
         const json = await dispatch(
             fetchThunk(API_PROJECT.userList, 'post', valueSearch),
         );
+        setRecord(valueSearch.count)
+        setTotalPage(json.recordsTotal)
         if (json.success) {
             setData(json.data.map((data: any) => ({
                 id: data.profile_id,
@@ -58,7 +64,7 @@ function UserPage() {
                 wishlist: data.wishlist,
                 created: data.created,
                 last_login: data.last_login,
-                storename: data.storeName
+                storename: data.storeName,
             })))
             setLoading(false)
         }
@@ -70,8 +76,7 @@ function UserPage() {
         const json = await dispatch(
             fetchThunk(API_PROJECT.userDelete, 'post', valueDelete),
         );
-        if(json?.success){
-            console.log('OK')
+        if (json?.success) {
             setLoading(false)
         }
         setOpenModal(false)
@@ -87,27 +92,58 @@ function UserPage() {
             {openModal &&
                 <Modal
                     title='Confirm Delete'
-                    content={`Do you want to delete ${valueDelete.params.length > 1 ? 'these users ?' : 'this user ?' }`}
+                    content={`Do you want to delete ${valueDelete.params.length > 1 ? 'these users ?' : 'this user ?'}`}
                     setOpen={setOpenModal}
                     handleConfirm={confirmRemove}
                 />}
             <h2 style={{ fontSize: '2rem', lineHeight: '2.5rem', marginBottom: '16px' }}>Search for users</h2>
-            <UserFilter setValueSearch={setValueSearch} />
+
+            <UserFilter setValueSearch={setValueSearch} valueSearch={valueSearch}/>
+
             <button type='button'
                 className='btn btn-default mb-4'
                 onClick={() => { dispatch(replace(ROUTES.user_create)) }}
             >
                 Add User
             </button>
-            <div style={{ overflowX: 'auto' }}>
-                <TableUser datas={data} loading={loading} setValueDelete={setValueDelete}/>
+
+            <TableUser datas={data} loading={loading} setValueDelete={setValueDelete} />
+
+            <div className="pagination">
+                <ReactPaginate
+                    pageCount={Math.ceil(totalPage/record)}
+                    pageRangeDisplayed={5}
+                    marginPagesDisplayed={1}
+                    previousLabel={<i className="fa-solid fa-angles-left icon-angles"></i>}
+                    nextLabel={<i className="fa-solid fa-angles-right icon-angles"></i>}
+                    onPageChange={(page) => setValueSearch({ ...valueSearch, page: page.selected + 1 })}
+                />
+                <div className='pagination_tooltip'>
+                    <span><b>{totalPage}</b> Items</span>
+                    <select
+                        className='mx-2'
+                        defaultValue={valueSearch.count}
+                        onChange={(e) => {
+                            setValueSearch({ ...valueSearch, count:+e.target.value })
+                            setRecord(+e.target.value)
+                        }}
+                    >
+                        <option value={5}>5</option>
+                        <option value={10}>10</option>
+                        <option value={15}>15</option>
+                        <option value={20}>20</option>
+                    </select>
+                    <span>per page</span>
+                </div>
             </div>
+
             <div className="above-scroller">
                 <div style={{ width: '1600px', height: "20px" }}></div>
             </div>
             <div className="sticky-panel">
-                <button type="button" disabled={valueDelete.params.length > 0 ? false : true}  onClick={()=>setOpenModal(true)} className="btn btn-warning">Remove Selected</button>
+                <button type="button" disabled={valueDelete.params.length > 0 ? false : true} onClick={() => setOpenModal(true)} className="btn btn-warning">Remove Selected</button>
             </div>
+
         </div>
     )
 }

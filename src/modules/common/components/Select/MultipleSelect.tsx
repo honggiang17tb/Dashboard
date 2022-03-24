@@ -1,33 +1,35 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import './Select.css'
 
 interface Props {
     data: any,
     placeholder?: string
-    checkbox?:boolean
-    defaultSelect?:any[]
+    checkbox?: boolean
+    defaultSelect?: any[]
+    onChange? : (value:any)=>void
+
 }
 
-const MultipleSelect = ({ data, placeholder,checkbox,defaultSelect }: Props) => {
+const MultipleSelect = ({ data, placeholder, checkbox, defaultSelect,onChange }: Props) => {
     const [open, setOpen] = useState(false)
     const [selected, setSelected] = useState(defaultSelect || [])
-    const [title, setTitle] = useState<Array<any>>([])
+    const [selectTitle, setSelectTitle] = useState<Array<any>>([])
+    const [selectValue, setSelectValue] = useState<Array<any>>([])
 
     const handleOpen = (e: any) => {
         e.preventDefault();
-        if(!e.target.closest(".icon-xmark")){
-            setOpen(!open)  
+        if (!e.target.closest(".icon-xmark")) {
+            setOpen(!open)
         }
     }
 
-
-    const handleSelect = (e: React.MouseEvent<unknown>, value: string) => {
+    const handleSelect = (e: React.MouseEvent<unknown>, index: any) => {
         e.preventDefault();
-        const selectedIndex = selected.indexOf(value);
+        const selectedIndex = selected.indexOf(index);
         let newSelected: any[] = [];
 
         if (selectedIndex === -1) {
-            newSelected = newSelected.concat(selected, value);
+            newSelected = newSelected.concat(selected, index);
         } else if (selectedIndex === 0) {
             newSelected = newSelected.concat(selected.slice(1));
         } else if (selectedIndex === selected.length - 1) {
@@ -40,37 +42,54 @@ const MultipleSelect = ({ data, placeholder,checkbox,defaultSelect }: Props) => 
         }
 
         setSelected(newSelected);
+
     }
 
-    const isSelected = (value: any) => {
-        if (selected.indexOf(value) !== -1) {
-            return 'selected'
-        }
-        return ''
+
+    const isSelected = (index: any) => {
+        return selected.indexOf(index) !== -1 ? 'selected' : ''
     }
 
+    useEffect(() => {
+        const title = selected.map((select, index) => {
+            return data[index].title
+        })
+        const value = selected.map((select, index) => {
+            return data[index].value
+        })
+        setSelectTitle(title);
+        setSelectValue(value);
+    }, [selected])
+
+    const handleChange = () => {
+        onChange ? onChange(selectValue) : null
+    }
+
+    useEffect(() => {
+        handleChange()
+    }, [selectValue])
     return (
         <>
-            <button className='multiple-select-custom' value={selected}>
+            <button className='multiple-select-custom'>
                 <div className='select-input' onClick={handleOpen}>
-                    {selected.length > 0 ?
-                        selected.map((selected,index) => {
+                    {selectTitle.length > 0 ?
+                        selectTitle.map((title, index) => {
                             return (
                                 <div className="option-view" key={index}>
-                                    <span>{selected}</span>
-                                    <span className="icon-xmark" onClick={(e)=>handleSelect(e,selected)}><i className="fa-solid fa-xmark"></i></span>
+                                    <span>{title}</span>
+                                    <span className="icon-xmark" onClick={(e) => handleSelect(e, index)}><i className="fa-solid fa-xmark"></i></span>
                                 </div>
                             )
                         })
                         : <input type='text' placeholder={placeholder}></input>}
-                    
+
                     {open ? <i className="fa-solid fa-angle-up ms-auto"></i> : <i className="fa-solid fa-angle-down ms-auto"></i>}
                 </div>
 
                 {open ?
                     <div className='option-list'>
                         {data.map((data: any, index: any) => {
-                            const isItemSelected = isSelected(data.value);
+                            const isItemSelected = isSelected(index);
                             return (
                                 <div
                                     key={index}
@@ -80,8 +99,8 @@ const MultipleSelect = ({ data, placeholder,checkbox,defaultSelect }: Props) => 
                                     }}
                                     className={`option-item ${isItemSelected}`}
                                 >
-                                    {checkbox && <input className="me-2" type='checkbox' checked={!!isItemSelected}></input>}
-                                    <option className='option-title' value={data.value}>{data.title}</option>
+                                    {checkbox && <input className="me-2" type='checkbox' readOnly checked={!!isItemSelected}></input>}
+                                    <option className='option-title'>{data.title}</option>
                                 </div>
                             )
 

@@ -16,14 +16,16 @@ export function fetchThunk(
     const res = await fetch(url, {
       credentials: 'include',
       method,
-      body: typeof body === 'object' ? JSON.stringify(body) : body,
+      body: typeof body === 'object' ? JSON.stringify(body) : JSON.stringify(body),
       headers:
         contentType !== 'multipart/form-data'
           ? {
-              'Content-Type': contentType || 'application/json',
-              Authorization: Cookies.get(ACCESS_TOKEN_KEY) || '',
-            }
-          : {},
+            'Content-Type': contentType || 'application/json',
+            Authorization: Cookies.get(ACCESS_TOKEN_KEY) || '',
+          }
+          : {
+
+          },
       cache: 'no-store',
     });
 

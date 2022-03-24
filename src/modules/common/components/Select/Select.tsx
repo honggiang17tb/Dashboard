@@ -2,38 +2,38 @@ import React, { useEffect, useRef, useState } from "react";
 import './Select.css'
 
 interface Props {
-    data: {title:string,value:string}[],
+    data: {title:string,value:any}[],
     placeholder?: string
     defaultSelect?: number
-    onChange? : (e:any)=>void
+    checkbox ?:boolean
+    onChange? : (value:any)=>void
 }
 
-const Select = ({ data, placeholder, defaultSelect,onChange }: Props) => {
+const Select = ({ data, placeholder, defaultSelect,checkbox,onChange }: Props) => {
     const [open, setOpen] = useState(false)
-    const [value, setValue] = useState('')
     const [title, setTitle] = useState(placeholder)
     const [selected, setSelected] = useState(defaultSelect)
-
+    const [value,setValue] = useState<any>()
 
     const handleOpen = (e: any) => {
         e.preventDefault();
         setOpen(!open)
-
     }
     const isSelected = (id: number) => selected === id ? 'selected' : '';
 
-    const handleChange = (e:any) =>{
-        
-        console.log(e);
+    const handleChange = () =>{
+        onChange ? onChange(value) : null
     }
 
+    useEffect(()=>{
+        handleChange()
+    },[value])
 
     return (
         <>
             <button onClick={handleOpen} className='select-custom'>
                 <div className='select-input'>
                     <span className='select-title'>{title}</span>
-                    <input onChange={handleChange} className='input-value opacity-0' value={value}></input>
                     {open ? <i className="fa-solid fa-angle-up ms-auto"></i> : <i className="fa-solid fa-angle-down ms-auto"></i>}
                 </div>
 
@@ -45,14 +45,15 @@ const Select = ({ data, placeholder, defaultSelect,onChange }: Props) => {
                                 <div
                                     key={index}
                                     onClick={(e) => {
-                                        setValue(data.value)
                                         setTitle(data.title)
+                                        setValue(data.value);
                                         setSelected(index)
                                         handleOpen(e)
                                     }}
                                     className={`option-item ${isItemSelected}`}
                                 >
-                                    <option className="option-title" value={data.value}>{data.title}</option>
+                                    {checkbox && <input className="me-2" type='checkbox' readOnly checked={!!isItemSelected}></input>}
+                                    <option className="option-title" >{data.title}</option>
                                 </div>
                             )
 

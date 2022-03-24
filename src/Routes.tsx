@@ -13,7 +13,7 @@ export const Routes = () => {
 
 
   return (
-    <Suspense fallback={<div>Loading.....</div>}>
+    <Suspense fallback={<div></div>}>
       <Switch location={location}>
         <ProtectedRoute path={ROUTES.home} component={HomePage} />
         <Route path={ROUTES.login} component={LoginPage} />

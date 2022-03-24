@@ -1,5 +1,5 @@
-import { replace } from 'connected-react-router';
 import React, { useState } from "react";
+import { replace } from 'connected-react-router';
 import { useDispatch } from "react-redux";
 import { Action } from 'redux';
 import { ThunkDispatch } from 'redux-thunk';
@@ -9,6 +9,7 @@ import { AppState } from '../../../redux/reducer';
 import { fetchThunk } from '../../common/redux/thunk';
 import Loading from '../../common/components/Loading/Loading';
 import Select from "../../common/components/Select/Select";
+import { toast, Slide } from 'react-toastify';
 
 
 const UserCreate = () => {
@@ -36,20 +37,27 @@ const UserCreate = () => {
         const json = await dispatch(
             fetchThunk(API_PROJECT.userCreate, 'post', valueCreate),
         );
-        if(json?.success){
-            console.log('OK')
+        if (json?.success) {
             setLoading(false)
+            toast.success('Successful', {
+                position: "top-right",
+                autoClose: 3000,
+                theme: "colored",
+                transition: Slide
+            });
         }
         dispatch(replace(ROUTES.user))
     }
-    const list_type = [{ title: 'Individual', value: 'individual' },{ title: 'Business', value: 'business' }]
-    const list_accessLevel = [{ title: 'Admin', value: '100' },{ title: 'Vendor', value: '10' }]
-    const list_membership = [{ title: 'Ignore Membership', value: 'null' },{ title: 'General', value: '4' }]
+
+
+    const list_type = [{ title: 'Individual', value: 'individual' }, { title: 'Business', value: 'business' }]
+    const list_accessLevel = [{ title: 'Admin', value: '100' }, { title: 'Vendor', value: '10' }]
+    const list_membership = [{ title: 'Ignore Membership', value: 'null' }, { title: 'General', value: '4' }]
 
     return (
-        
+
         <div className="user-create">
-            {loading && <Loading/>}
+            {loading && <Loading />}
             <div className="btn-back mb-2" onClick={() => dispatch(replace(ROUTES.user))}>
                 <a><i className="fa-solid fa-arrow-left"></i></a>
             </div>
@@ -110,7 +118,7 @@ const UserCreate = () => {
                     <div className="form-group">
                         <label className="col-md-3">Type</label>
                         <div className="col-md-3 px-3">
-                            <Select data={list_type} defaultSelect={0} placeholder={'Individual'}/>
+                            <Select data={list_type} defaultSelect={0} placeholder={'Individual'} />
                         </div>
                     </div>
                     <div className="form-group">
@@ -126,13 +134,13 @@ const UserCreate = () => {
                     <div className="form-group">
                         <label className="col-md-3">Access level <span>*</span></label>
                         <div className="col-md-3 px-3">
-                            <Select data={list_accessLevel} defaultSelect={1} placeholder={'Vendor'}/>
+                            <Select data={list_accessLevel} defaultSelect={1} placeholder={'Vendor'} />
                         </div>
                     </div>
                     <div className="form-group">
                         <label className="col-md-3">Membership</label>
                         <div className="col-md-3 px-3">
-                            <Select data={list_membership} defaultSelect={0} placeholder={'Ignore Membership'}/>
+                            <Select data={list_membership} defaultSelect={0} placeholder={'Ignore Membership'} />
                         </div>
                     </div>
                     <div className="form-group">

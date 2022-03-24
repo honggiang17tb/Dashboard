@@ -11,6 +11,7 @@ import { setLocale } from './modules/intl/redux/intlReducer';
 import configureStore, { history } from './redux/configureStore';
 import reportWebVitals from './reportWebVitals';
 
+
 smoothscroll.polyfill();
 
 const { store, persistor } = configureStore({});

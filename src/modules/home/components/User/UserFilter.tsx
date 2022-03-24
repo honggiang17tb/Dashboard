@@ -1,37 +1,22 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Select from "../../../common/components/Select/Select";
 
-interface Props{
-    setValueSearch:React.Dispatch<React.SetStateAction<any>>
+interface Props {
+    valueSearch: any
+    setValueSearch: React.Dispatch<React.SetStateAction<any>>
 }
 
-const UserFilter = ({setValueSearch}:Props) => {
+const UserFilter = ({ valueSearch, setValueSearch }: Props) => {
 
     const [extend, setExtend] = useState(false)
 
-    const [valueFilter, setValueFilter] = useState({
-        page: 1,
-        count: 10,
-        search: "",
-        memberships: [
-        ],
-        types: [
-        ],
-        status: [
-        ],
-        country: "",
-        state: "",
-        address: "",
-        phone: "",
-        date_type: "R",
-        date_range: [
-        ],
-        sort: "last_login",
-        order_by: "DESC",
-        tz: 7
-    })
+    const [valueFilter, setValueFilter] = useState(valueSearch)
 
-    const handleSearch = async (e:any) =>{
+    useEffect(() => {
+        setValueFilter(valueSearch)
+    }, [valueSearch])
+
+    const handleSearch = async (e: any) => {
         e.preventDefault()
         setValueSearch(valueFilter)
     }
@@ -55,7 +40,7 @@ const UserFilter = ({setValueSearch}:Props) => {
                         <input type='text'
                             placeholder="Search keywords"
                             value={valueFilter.search}
-                            onChange={(e) => setValueFilter((prev) => ({ ...prev, search: e.target.value }))}
+                            onChange={(e) => setValueFilter((prev: any) => ({ ...prev, search: e.target.value }))}
                         />
                     </li>
                     <li style={{ width: '50%', marginRight: '20px' }}>
@@ -69,7 +54,12 @@ const UserFilter = ({setValueSearch}:Props) => {
                         </select>
                     </li>
                     <li style={{ width: '35%', marginRight: '20px' }}>
-                        <Select data={list_status} defaultSelect={0} placeholder={'Any status'} />
+                        <Select
+                            data={list_status}
+                            defaultSelect={0}
+                            placeholder={'Any status'}
+                            onChange={(value) => setValueFilter((prev: any) => ({ ...prev, status: [value] }))}
+                        />
                     </li>
                     <li>
                         <button className='btn btn-default btn-search' onClick={handleSearch}>Search</button>
@@ -83,7 +73,11 @@ const UserFilter = ({setValueSearch}:Props) => {
                                 <ul>
                                     <li>
                                         <label className="me-3">Country</label>
-                                        <Select data={list_country} defaultSelect={0} placeholder={'Select country'} />
+                                        <Select
+                                            data={list_country}
+                                            defaultSelect={0}
+                                            placeholder={'Select country'}
+                                        />
                                     </li>
                                     {valueFilter.country ?
                                         <li>
@@ -95,14 +89,14 @@ const UserFilter = ({setValueSearch}:Props) => {
                                         <label className="me-3">Address</label>
                                         <input type='text'
                                             value={valueFilter.address}
-                                            onChange={(e) => setValueFilter((prev) => ({ ...prev, address: e.target.value }))}
+                                            onChange={(e) => setValueFilter((prev: any) => ({ ...prev, address: e.target.value }))}
                                         />
                                     </li>
                                     <li>
                                         <label className="me-3">Phone</label>
                                         <input type='text'
                                             value={valueFilter.phone}
-                                            onChange={(e) => setValueFilter((prev) => ({ ...prev, phone: e.target.value }))}
+                                            onChange={(e) => setValueFilter((prev: any) => ({ ...prev, phone: e.target.value }))}
                                         />
                                     </li>
                                 </ul>
@@ -116,8 +110,8 @@ const UserFilter = ({setValueSearch}:Props) => {
                                                 className="me-2"
                                                 value={'registry'}
                                                 name='sort'
-                                                onChange={(e) => setValueFilter((prev) => {
-                                                   
+                                                onChange={(e) => setValueFilter((prev: any) => {
+
                                                     return { ...prev, sort: e.target.value }
                                                 })}
                                             />
@@ -128,8 +122,8 @@ const UserFilter = ({setValueSearch}:Props) => {
                                                 className="me-2"
                                                 value={'last_login'}
                                                 name='sort'
-                                                onChange={(e) => setValueFilter((prev) => {
-                                                    
+                                                onChange={(e) => setValueFilter((prev: any) => {
+
                                                     return { ...prev, sort: e.target.value }
                                                 })}
                                             />

@@ -1,31 +1,25 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Select from "../../../common/components/Select/Select";
 
 interface Props{
+    valueSearch:any
     setValueSearch:React.Dispatch<React.SetStateAction<any>>
 }
 
-const ProductFilter = ({setValueSearch}:Props) => {
+const ProductFilter = ({valueSearch,setValueSearch}:Props) => {
     const [extend, setExtend] = useState(false)
 
-    const [valueFilter, setValueFilter] = useState(
-        {
-            page: 1,
-            count: 10,
-            search: "",
-            category: "0",
-            stock_status: "all",
-            availability: "all",
-            vendor: "",
-            sort: "name",
-            order_by: "ASC",
-            search_type: ""
-          })
+    const [valueFilter, setValueFilter] = useState(valueSearch)
 
+    console.log(valueFilter);
     const handleSearch = (e:any) =>{
         e.preventDefault()
         setValueSearch(valueFilter)
     }
+
+    useEffect(()=>{
+        setValueFilter(valueSearch)
+    },[valueSearch])
 
     const list_category = [{ title: 'Any category', value: '' }]
     const list_stock_status = [{ title: 'Any stock status', value: '' }]
@@ -39,7 +33,7 @@ const ProductFilter = ({setValueSearch}:Props) => {
                         <input type='text'
                             placeholder="Search keywords"
                             onChange={(e) => {
-                                setValueFilter(prev => ({ ...prev, search: e.target.value }))
+                                setValueFilter((prev:any) => ({ ...prev, search: e.target.value }))
                             }}
                         />
                     </li>
@@ -82,7 +76,7 @@ const ProductFilter = ({setValueSearch}:Props) => {
                                 <label>Vendor</label>
                                 <input type="text"
                                     onChange={(e) => {
-                                        setValueFilter(prev => ({ ...prev, vendor: e.target.value }))
+                                        setValueFilter((prev:any) => ({ ...prev, vendor: e.target.value }))
                                     }}
                                 />
                             </li>
