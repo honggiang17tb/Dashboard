@@ -28,9 +28,11 @@ export const API_PROJECT = {
   categories : `https://api.gearfocus.div4.pgtest.co/api/categories/list`,
   brands : `https://api.gearfocus.div4.pgtest.co/apiAdmin/brands/list`,
   country : `https://api.gearfocus.div4.pgtest.co/apiAdmin/commons/country`,
+  state:`https://api.gearfocus.div4.pgtest.co/apiAdmin/commons/state`,
   vendor : `https://api.gearfocus.div4.pgtest.co/apiAdmin/vendors/list`,
   shipping:`https://api.gearfocus.div4.pgtest.co/apiAdmin/shipping/list`,
   condition:`https://api.gearfocus.div4.pgtest.co/apiAdmin/conditions/list`,
+  upload_image:`https://api.gearfocus.div4.pgtest.co/api/products/upload-image`,
 
   userList : `https://api.gearfocus.div4.pgtest.co/apiAdmin/users/list`,
   userCreate:`https://api.gearfocus.div4.pgtest.co/apiAdmin/users/create`,

@@ -21,11 +21,15 @@ interface DataProps {
     datas: Array<Props> | undefined
     loading: boolean
     setValueDelete: React.Dispatch<React.SetStateAction<any>>
+    setValueSearch: React.Dispatch<React.SetStateAction<any>>
 }
 const TableUser = (props: DataProps) => {
-    const { datas, loading, setValueDelete } = props
+    const { datas, loading, setValueDelete, setValueSearch } = props
+
     const dispatch = useDispatch()
     const [selected, setSelected] = React.useState<readonly string[]>([]);
+    const [sortByVendor, setSortByVendor] = useState('')
+    const [sortByName, setSortByName] = useState('')
 
     const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
         if (event.target.checked) {
@@ -63,6 +67,55 @@ const TableUser = (props: DataProps) => {
         handleSelect(event, id)
     }
 
+    const handleSort = (type: any) => {
+
+        switch (type) {
+            case 'vendor':
+                if (sortByVendor == '') {
+                    setSortByVendor('DESC')
+                    setValueSearch((prev: any) => {
+                        return { ...prev, sort: type, order_by: 'DESC' }
+                    })
+                } else {
+                    if (sortByVendor == 'ASC') {
+                        setSortByVendor('DESC')
+                        setValueSearch((prev: any) => {
+                            return { ...prev, sort: type, order_by: 'DESC' }
+                        })
+                    } else {
+                        setSortByVendor('ASC')
+                        setValueSearch((prev: any) => {
+                            return { ...prev, sort: type, order_by: 'ASC' }
+                        })
+                    }
+                }
+                setSortByName('')
+                break
+            case 'fistName':
+                if (sortByName == '') {
+                    setSortByName('DESC')
+                    setValueSearch((prev: any) => {
+                        return { ...prev, sort: type, order_by: 'DESC' }
+                    })
+                } else {
+                    if (sortByName == 'ASC') {
+                        setSortByName('DESC')
+                        setValueSearch((prev: any) => {
+                            return { ...prev, sort: type, order_by: 'DESC' }
+                        })
+                    } else {
+                        setSortByName('ASC')
+                        setValueSearch((prev: any) => {
+                            return { ...prev, sort: type, order_by: 'ASC' }
+                        })
+                    }
+                }
+                setSortByVendor('')
+                break
+        }
+
+    }
+
     useEffect(() => {
         setValueDelete({
             params: selected.map((item) => {
@@ -77,8 +130,20 @@ const TableUser = (props: DataProps) => {
                 <thead>
                     <tr>
                         <th scope="col"><input type='checkbox' onChange={handleSelectAllClick}></input></th>
-                        <th scope="col">Login/Email</th>
-                        <th scope="col">Name</th>
+                        <th scope="col"
+                            className="canSort"
+                            onClick={() => handleSort('vendor')}
+                        >
+                            Login/Email
+                            <i className={`icon-arrow fa-solid ${sortByVendor == '' ? '' : sortByVendor == 'ASC' ? "fa-arrow-up" : "fa-arrow-down"}`}></i>
+                        </th>
+                        <th scope="col"
+                            className="canSort"
+                            onClick={() => handleSort('fistName')}
+                        >
+                            Name
+                            <i className={`icon-arrow fa-solid ${sortByName == '' ? '' : sortByName == 'ASC' ? "fa-arrow-up" : "fa-arrow-down"}`}></i>
+                        </th>
                         <th scope="col">Access level</th>
                         <th scope="col">Products</th>
                         <th scope="col">Orders</th>

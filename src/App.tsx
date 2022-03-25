@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React,{useState,useEffect} from 'react';
 import './App.css';
 import { Routes } from './Routes';
 
@@ -45,7 +45,6 @@ function App() {
       return { ...prev, shipping: shipping.data }
     })
 
-
   }
 
   useEffect(() => {
@@ -54,8 +53,7 @@ function App() {
 
   useEffect(() => {
     dispatch(setPayload(data))
-  }, [data])
-
+  },[data])
 
   return (
     <>

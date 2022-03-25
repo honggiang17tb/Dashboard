@@ -1,5 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import Select from "../../../common/components/Select/Select";
+import { useSelector, useDispatch } from "react-redux";
+import { fetchThunk } from "../../../common/redux/thunk";
+import { API_PROJECT } from "../../../../configs/api";
+import { ThunkDispatch } from "redux-thunk";
+import { AppState } from "../../../../redux/reducer";
+import { Action } from "redux";
+import { storeSelector } from "../../../../redux/selector";
+
 
 interface Props {
     valueSearch: any
@@ -8,9 +16,11 @@ interface Props {
 
 const UserFilter = ({ valueSearch, setValueSearch }: Props) => {
 
+    const dispatch = useDispatch<ThunkDispatch<AppState, null, Action<string>>>();
     const [extend, setExtend] = useState(false)
-
+    const state = useSelector(storeSelector)
     const [valueFilter, setValueFilter] = useState(valueSearch)
+    const [city, setCity] = useState<any>([])
 
     useEffect(() => {
         setValueFilter(valueSearch)
@@ -21,16 +31,33 @@ const UserFilter = ({ valueSearch, setValueSearch }: Props) => {
         setValueSearch(valueFilter)
     }
 
+    const getState = async (state: any) => {
+        const json = await dispatch(
+            fetchThunk(API_PROJECT.state, 'post', { code: state }),
+        );
+        if (json?.success) {
+            setCity(json.data.map((data: any) => {
+                return {
+                    title:data.state,
+                    value:data.state
+                }
+            }))
+        }
+    }
+
     const list_status = [
         { title: 'Any status', value: 'null' },
         { title: 'Enable', value: 'E' },
         { title: 'Disable', value: 'D' },
         { title: 'Unapproved vendor', value: 'U' },
     ]
-    const list_country = [
-        { title: 'Select Country', value: 'null' },
-
-    ]
+    
+    const list_country = state?.payload?.country?.map((data: any) => {
+        return {
+            title: data.country,
+            value: data.code
+        }
+    })
 
     return (
         <form >
@@ -75,14 +102,22 @@ const UserFilter = ({ valueSearch, setValueSearch }: Props) => {
                                         <label className="me-3">Country</label>
                                         <Select
                                             data={list_country}
-                                            defaultSelect={0}
                                             placeholder={'Select country'}
+                                            onChange={(value) => {
+                                                setValueFilter((prev: any) => ({ ...prev, country: value }))
+                                                getState(value)
+                                            }}
                                         />
                                     </li>
                                     {valueFilter.country ?
                                         <li>
                                             <label className="me-3">State</label>
-                                            <input type='text' />
+                                            <Select
+                                                data={city}
+                                                onChange={(value) => {
+                                                    setValueFilter((prev: any) => ({ ...prev, state: value }))
+                                                }}
+                                            />
                                         </li>
                                         : null}
                                     <li>

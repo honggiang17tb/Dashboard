@@ -32,11 +32,12 @@ interface DataProps {
     loading: boolean
     setValueDelete: React.Dispatch<React.SetStateAction<any>>
     setValueExport: React.Dispatch<React.SetStateAction<any>>
+    setValueSearch: React.Dispatch<React.SetStateAction<any>>
     getData?: any
 }
 
 const TableProduct = (props: DataProps) => {
-    const { datas, loading, setValueDelete, setValueExport, getData } = props
+    const { datas, loading, setValueDelete, setValueExport, setValueSearch, getData } = props
     const dispatch = useDispatch<ThunkDispatch<AppState, null, Action<string>>>();
     const [selected, setSelected] = React.useState<readonly string[]>([]);
     const [selectDelete, setSelectDelete] = React.useState<readonly string[]>([]);
@@ -44,6 +45,9 @@ const TableProduct = (props: DataProps) => {
     const [openModal_Enable, setOpenModal_Enable] = useState(false)
     const [payloadUpdateEnable, setUpdateEnable] = useState<any>()
     const [payloadUpdatePS, setUpdatePS] = useState<any>([])
+    const [sortBySku, setSortBySku] = useState('')
+    const [sortByName, setSortByName] = useState('')
+
 
 
 
@@ -56,8 +60,53 @@ const TableProduct = (props: DataProps) => {
         setSelected([]);
     };
 
-    const handleEdit = (id: any, price: any, stock: any) => {
 
+    const handleSort = (type: any) => {
+
+        switch (type) {
+            case 'sku':
+                if (sortBySku == '') {
+                    setSortBySku('DESC')
+                    setValueSearch((prev: any) => {
+                        return { ...prev, sort: type, order_by: 'DESC' }
+                    })
+                } else {
+                    if (sortBySku == 'ASC') {
+                        setSortBySku('DESC')
+                        setValueSearch((prev: any) => {
+                            return { ...prev, sort: type, order_by: 'DESC' }
+                        })
+                    } else {
+                        setSortBySku('ASC')
+                        setValueSearch((prev: any) => {
+                            return { ...prev, sort: type, order_by: 'ASC' }
+                        })
+                    }
+                }
+                setSortByName('')
+                break
+            case 'name':
+                if (sortByName == '') {
+                    setSortByName('DESC')
+                    setValueSearch((prev: any) => {
+                        return { ...prev, sort: type, order_by: 'DESC' }
+                    })
+                } else {
+                    if (sortByName == 'ASC') {
+                        setSortByName('DESC')
+                        setValueSearch((prev: any) => {
+                            return { ...prev, sort: type, order_by: 'DESC' }
+                        })
+                    } else {
+                        setSortByName('ASC')
+                        setValueSearch((prev: any) => {
+                            return { ...prev, sort: type, order_by: 'ASC' }
+                        })
+                    }
+                }
+                setSortBySku('')
+                break
+        }
 
     }
 
@@ -152,8 +201,20 @@ const TableProduct = (props: DataProps) => {
                 <thead>
                     <tr>
                         <th scope="col"><input type='checkbox' onChange={handleSelectAllClick}></input></th>
-                        <th scope="col">SKU</th>
-                        <th scope="col" className="custom-width">Name</th>
+                        <th scope="col"
+                            className="canSort"
+                            onClick={() => handleSort('sku')}
+                        >
+                            SKU
+                            <i className={`icon-arrow fa-solid ${sortBySku == '' ? '' : sortBySku == 'ASC' ? "fa-arrow-up" : "fa-arrow-down"}`}></i>
+                        </th>
+                        <th scope="col"
+                            className="custom-width canSort"
+                            onClick={() => handleSort('name')}
+                        >
+                            Name
+                            <i className={`icon-arrow fa-solid ${sortByName == '' ? '' : sortByName == 'ASC' ? "fa-arrow-up" : "fa-arrow-down"}`}></i>
+                        </th>
                         <th scope="col">Category</th>
                         <th scope="col">Price</th>
                         <th scope="col">In stock</th>

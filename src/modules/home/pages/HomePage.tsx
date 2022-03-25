@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { Route, Switch} from 'react-router-dom';
 import { ROUTES } from '../../../configs/routes';
 import Header from '../components/Home/Header';
@@ -9,7 +9,6 @@ import UserCreate from './UserCreate';
 import ProductPage from './ProductPage';
 import ProductDetails from './ProductDetails';
 import ProductCreate from './ProductCreate';
-
 import '../css/Home.css';
 
 const HomePage = () => {

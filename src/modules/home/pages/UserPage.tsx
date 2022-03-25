@@ -107,7 +107,7 @@ function UserPage() {
                 Add User
             </button>
 
-            <TableUser datas={data} loading={loading} setValueDelete={setValueDelete} />
+            <TableUser datas={data} loading={loading} setValueDelete={setValueDelete} setValueSearch={setValueSearch}/>
 
             <div className="pagination">
                 <ReactPaginate

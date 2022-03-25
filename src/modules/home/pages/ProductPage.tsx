@@ -122,6 +122,7 @@ const ProductPage = () => {
           loading={loading}
           setValueDelete={setValueDelete}
           setValueExport={setValueExport}
+          setValueSearch={setValueSearch}
           getData={getData}
         />
       </div>

@@ -166,6 +166,9 @@
     color: #fff;
     white-space: nowrap;
   }
+  .table-list thead th.canSort{
+      cursor: pointer;
+  }
   .table-list .lines td {
     font-size: 14px;
     padding: 10px 17px;
@@ -226,6 +229,10 @@
       background: #a16eff;
   }
 
+  .icon-arrow{
+      font-size: 12px;
+      margin-left: 4px;
+  }
 
   /* Pagination */
   .pagination{
@@ -251,6 +258,9 @@
 .pagination li.selected{
     background: #b18aff;
 }
+.pagination li:hover{
+    background: #b18aff;
+}
 .pagination li a{
     line-height: 32px;
     padding: 6px 14px;
@@ -274,5 +284,6 @@
     outline: none;
     color: #fff;
     background:#a16eff;
+    cursor: pointer;
 }
 
