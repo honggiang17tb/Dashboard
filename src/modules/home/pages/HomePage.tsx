@@ -1,5 +1,5 @@
-import React, { useState,useEffect } from 'react';
-import { Route, Switch} from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Route, Switch } from 'react-router-dom';
 import { ROUTES } from '../../../configs/routes';
 import Header from '../components/Home/Header';
 import Sidebar from '../components/Home/Sidebar';
@@ -21,7 +21,6 @@ const HomePage = () => {
       <Header checked={checked} setChecked={setChecked} />
       <Sidebar checked={checked} setChecked={setChecked} />
       <div className="content">
-
         <div className='content_container'>
           <Switch>
             <Route exact path={ROUTES.user} component={UserPage} />

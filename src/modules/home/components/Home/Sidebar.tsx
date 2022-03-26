@@ -1,5 +1,5 @@
 import { replace } from 'connected-react-router';
-import React from 'react';
+import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { ROUTES } from '../../../../configs/routes';
 
@@ -12,6 +12,8 @@ interface Props {
 function Sidebar(props: Props) {
     const { checked, setChecked } = props
     const dispatch = useDispatch()
+    const [activeUser, setActiveUser] = useState('active')
+    const [activePro, setActivePro] = useState('')
 
     const handleToggle = (e: any) => {
 
@@ -39,11 +41,11 @@ function Sidebar(props: Props) {
                     </a>
 
                     <ul className="sub_menu">
-                        
+
                     </ul>
                 </li>
                 <li className={`item`} onClick={handleToggle}>
-                    <a className='active'>
+                    <a className={activePro}>
                         <i className="fa-solid fa-tag"></i>
                         <span>Catalog</span>
                         <i className="fa-solid fa-angle-left icon-angle-left"></i>
@@ -52,14 +54,19 @@ function Sidebar(props: Props) {
 
                     <ul className="sub_menu">
                         <li>
-                            <a className='active' onClick={() => { dispatch(replace(ROUTES.product)) }}>Products</a>
+                            <a className={activePro}
+                                onClick={() => {
+                                setActiveUser('')
+                                setActivePro('active')
+                                dispatch(replace(ROUTES.product))
+                            }}>Products</a>
                         </li>
-                        
+
 
                     </ul>
                 </li>
                 <li className={`item`} onClick={handleToggle}>
-                    <a >
+                    <a className={activeUser}>
                         <i className="fa-solid fa-user-group"></i>
                         <span>User</span>
                         <i className="fa-solid fa-angle-left icon-angle-left"></i>
@@ -68,7 +75,11 @@ function Sidebar(props: Props) {
 
                     <ul className="sub_menu">
                         <li>
-                            <a onClick={() => { dispatch(replace(ROUTES.user)) }}>User list</a>
+                            <a className={activeUser} onClick={() => {
+                                setActiveUser('active')
+                                setActivePro('')
+                                dispatch(replace(ROUTES.user))
+                            }}>User list</a>
                         </li>
                     </ul>
                 </li>

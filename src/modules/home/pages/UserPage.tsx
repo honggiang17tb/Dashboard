@@ -25,7 +25,7 @@ function UserPage() {
     const [totalPage,setTotalPage] = useState<any>()
     const [valueSearch, setValueSearch] = useState({
         "page": 1,
-        "count": 5,
+        "count": 10,
         "search": "",
         "memberships": [
         ],
@@ -128,10 +128,11 @@ function UserPage() {
                             setRecord(+e.target.value)
                         }}
                     >
-                        <option value={5}>5</option>
                         <option value={10}>10</option>
-                        <option value={15}>15</option>
-                        <option value={20}>20</option>
+                        <option value={25}>25</option>
+                        <option value={50}>50</option>
+                        <option value={75}>75</option>
+                        <option value={100}>100</option>
                     </select>
                     <span>per page</span>
                 </div>

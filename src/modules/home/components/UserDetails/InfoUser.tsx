@@ -10,7 +10,7 @@ import { fetchThunk } from '../../../common/redux/thunk';
 import Loading from '../../../common/components/Loading/Loading';
 import Select from "../../../common/components/Select/Select";
 import MultipleSelect from "../../../common/components/Select/MultipleSelect";
-import { toast ,Slide} from 'react-toastify';
+import { toast, Slide } from 'react-toastify';
 
 interface Props {
     data?: any
@@ -58,13 +58,32 @@ const InfoUser = ({ data }: Props) => {
         }
     }
 
-    
+
     const { E, D, U } = data.data.account_status
     const list_status = [
         { title: E, value: 'E' },
         { title: D, value: 'D' },
         { title: U, value: 'U' },
     ]
+    const list_membership = [
+        { title: "General", value: '4' },
+        { title: "Ignore Membership", value: '' },
+    ]
+    const getMembership = (value: string) => {
+        if(value == '4'){
+            return {
+                placeholder: 'General',
+                defaultSelect: 0
+            }
+        }else{
+            return {
+                placeholder: 'Ignore Membership',
+                defaultSelect: 1
+            }
+        }
+
+    }
+
 
     const list_roles = data.data.account_roles.map((role: any, index: number) => {
         return {
@@ -72,7 +91,6 @@ const InfoUser = ({ data }: Props) => {
             value: role.id
         }
     })
-
 
     const getAccess = (text: string) => {
         if (text === '100') {
@@ -258,7 +276,12 @@ const InfoUser = ({ data }: Props) => {
                         <div className="col-md-3 px-3">
                             <Select data={list_status}
                                 placeholder={data.data.account_status[valueUpdate.params[0].status]}
-
+                                defaultSelect={0}
+                                onChange={(value) => setValueUpdate(prev => {
+                                    return {
+                                        ...prev, params: [{ ...prev.params[0], status: value }]
+                                    }
+                                })}
                             />
                         </div>
                     </div>
@@ -279,7 +302,15 @@ const InfoUser = ({ data }: Props) => {
                     <div className="form-group">
                         <label className="col-md-3">Membership</label>
                         <div className="col-md-3 px-3">
-                            <span></span>
+                            <Select
+                                data={list_membership}
+                                {...getMembership(data.data.info.membership_id)}
+                                onChange={(value) => setValueUpdate(prev => {
+                                    return {
+                                        ...prev, params: [{ ...prev.params[0], membership_id:value }]
+                                    }
+                                })}
+                            />
                         </div>
                     </div>
                     <div className="form-group">

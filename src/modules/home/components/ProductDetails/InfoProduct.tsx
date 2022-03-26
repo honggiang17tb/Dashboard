@@ -9,6 +9,7 @@ import Loading from '../../../common/components/Loading/Loading';
 import { toast, Slide } from 'react-toastify';
 import TextEditor from "../../../common/components/TextEditor/TextEditor";
 
+
 interface Props {
     data?: any
 }
@@ -156,7 +157,7 @@ const InfoProduct = ({ data }: Props) => {
                             <input type="text"
                                 className="insert"
                                 value={valueUpdate.name}
-                                onChange={(e) => { setValueUpdate((prev:any) => ({ ...prev, name: e.target.value })) }}
+                                onChange={(e) => { setValueUpdate((prev: any) => ({ ...prev, name: e.target.value })) }}
                             />
                         </div>
                     </div>
@@ -165,7 +166,7 @@ const InfoProduct = ({ data }: Props) => {
                         <div className="col-md-4 px-3">
                             <Select
                                 data={list_brand}
-                                onChange={(value) => { setValueUpdate((prev:any) => ({ ...prev, brand_id: value })) }}
+                                onChange={(value) => { setValueUpdate((prev: any) => ({ ...prev, brand_id: value })) }}
                                 {...getBrand(valueUpdate.brand_id)}
                             />
                         </div>
@@ -177,7 +178,7 @@ const InfoProduct = ({ data }: Props) => {
                                 data={list_condition}
                                 placeholder='Used'
                                 defaultSelect={0}
-                                onChange={(value) => { setValueUpdate((prev:any) => ({ ...prev, condition_id: value })) }}
+                                onChange={(value) => { setValueUpdate((prev: any) => ({ ...prev, condition_id: value })) }}
                             />
                             <p className="help">Select Used Condition</p>
                         </div>
@@ -196,7 +197,7 @@ const InfoProduct = ({ data }: Props) => {
                             <input type="text"
                                 className="insert"
                                 value={valueUpdate.sku}
-                                onChange={(e) => { setValueUpdate((prev:any) => ({ ...prev, sku: e.target.value })) }}
+                                onChange={(e) => { setValueUpdate((prev: any) => ({ ...prev, sku: e.target.value })) }}
                             />
                         </div>
                     </div>
@@ -212,7 +213,7 @@ const InfoProduct = ({ data }: Props) => {
                             <MultipleSelect
                                 data={list_category}
                                 placeholder='Type Vendor name to select'
-                                onChange={(value) => { setValueUpdate((prev:any) => ({ ...prev, categories: value })) }}
+                                onChange={(value) => { setValueUpdate((prev: any) => ({ ...prev, categories: value })) }}
 
                             />
                         </div>
@@ -222,7 +223,7 @@ const InfoProduct = ({ data }: Props) => {
                         <div className="col-md-6 px-3">
                             <TextEditor
                                 value={valueUpdate.description}
-                                onBlur={(value: any) => { setValueUpdate((prev:any) => ({ ...prev, description: value })) }}
+                                onBlur={(value: any) => { setValueUpdate((prev: any) => ({ ...prev, description: value })) }}
                             />
                         </div>
                     </div>
@@ -232,7 +233,7 @@ const InfoProduct = ({ data }: Props) => {
                             <input
                                 checked={valueUpdate.enabled === '1' ? true : false}
                                 type='checkbox'
-                                onChange={(e) => setValueUpdate((prev:any) => ({ ...prev, enabled: e.target.checked ? 1 : 0 }))}
+                                onChange={(e) => setValueUpdate((prev: any) => ({ ...prev, enabled: e.target.checked ? 1 : 0 }))}
 
                             />
                             {/* <i className="fa fa-question-circle icon-question"></i> */}
@@ -252,7 +253,7 @@ const InfoProduct = ({ data }: Props) => {
                                 data={list_membership}
                                 placeholder={list_membership[0].title}
                                 checkbox
-                                onChange={(value) => { setValueUpdate((prev:any) => ({ ...prev, memberships: value })) }}
+                                onChange={(value) => { setValueUpdate((prev: any) => ({ ...prev, memberships: value })) }}
                             />
                         </div>
                     </div>
@@ -263,7 +264,7 @@ const InfoProduct = ({ data }: Props) => {
                             <span className="me-2">Tax Exempt</span>
                             <input type='checkbox'
                                 checked={valueUpdate.tax_exempt === '1' ? true : false}
-                                onChange={(e) => setValueUpdate((prev:any) => ({ ...prev, tax_exempt: e.target.checked ? 1 : 0 }))}
+                                onChange={(e) => setValueUpdate((prev: any) => ({ ...prev, tax_exempt: e.target.checked ? 1 : 0 }))}
                             />
 
                         </div>
@@ -275,12 +276,12 @@ const InfoProduct = ({ data }: Props) => {
                                 style={{ flex: '1' }}
                                 className="insert col-md-2"
                                 value={Number(valueUpdate.price).toFixed(2)}
-                                onChange={(e) => { setValueUpdate((prev:any) => ({ ...prev, price: `${Number(e.target.value).toFixed(2)}` })) }}
+                                onChange={(e) => { setValueUpdate((prev: any) => ({ ...prev, price: `${Number(e.target.value).toFixed(2)}` })) }}
                             />
                             <span className="mx-2">Sale</span>
                             <input type='checkbox'
                                 checked={valueUpdate.participate_sale === '1' ? true : false}
-                                onChange={(e) => setValueUpdate((prev:any) => ({ ...prev, participate_sale: e.target.checked ? 1 : 0 }))}
+                                onChange={(e) => setValueUpdate((prev: any) => ({ ...prev, participate_sale: e.target.checked ? 1 : 0 }))}
                             />
                         </div>
                     </div>
@@ -296,7 +297,7 @@ const InfoProduct = ({ data }: Props) => {
                             <input type="text"
                                 className="insert"
                                 value={valueUpdate.quantity}
-                                onChange={(e) => { setValueUpdate((prev:any) => ({ ...prev, quantity: e.target.value })) }}
+                                onChange={(e) => { setValueUpdate((prev: any) => ({ ...prev, quantity: e.target.value })) }}
                             />
                         </div>
                     </div>
