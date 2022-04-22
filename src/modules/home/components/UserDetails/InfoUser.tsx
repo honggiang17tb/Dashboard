@@ -1,16 +1,16 @@
-import React, { useEffect, useState } from "react";
-import { useParams } from 'react-router';
 import moment from "moment";
+import React, { useState } from "react";
 import { useDispatch } from "react-redux";
+import { useParams } from 'react-router';
 import { Action } from 'redux';
 import { ThunkDispatch } from 'redux-thunk';
 import { API_PROJECT } from '../../../../configs/api';
 import { AppState } from '../../../../redux/reducer';
-import { fetchThunk } from '../../../common/redux/thunk';
+import { alertSuccess } from "../../../../utils/helper";
 import Loading from '../../../common/components/Loading/Loading';
-import Select from "../../../common/components/Select/Select";
 import MultipleSelect from "../../../common/components/Select/MultipleSelect";
-import { toast, Slide } from 'react-toastify';
+import Select from "../../../common/components/Select/Select";
+import { fetchThunk } from '../../../common/redux/thunk';
 
 interface Props {
     data?: any
@@ -49,12 +49,7 @@ const InfoUser = ({ data }: Props) => {
         );
         if (json?.success) {
             setLoading(false)
-            toast.success('Successful', {
-                position: "top-right",
-                autoClose: 3000,
-                theme: "colored",
-                transition: Slide
-            });
+            alertSuccess('Successful')
         }
     }
 

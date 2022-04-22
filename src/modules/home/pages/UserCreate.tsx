@@ -1,15 +1,15 @@
-import React, { useState } from "react";
 import { replace } from 'connected-react-router';
+import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { Action } from 'redux';
 import { ThunkDispatch } from 'redux-thunk';
 import { API_PROJECT } from '../../../configs/api';
 import { ROUTES } from '../../../configs/routes';
 import { AppState } from '../../../redux/reducer';
-import { fetchThunk } from '../../common/redux/thunk';
+import { alertSuccess } from "../../../utils/helper";
 import Loading from '../../common/components/Loading/Loading';
 import Select from "../../common/components/Select/Select";
-import { toast, Slide } from 'react-toastify';
+import { fetchThunk } from '../../common/redux/thunk';
 
 
 const UserCreate = () => {
@@ -39,12 +39,7 @@ const UserCreate = () => {
         );
         if (json?.success) {
             setLoading(false)
-            toast.success('Successful', {
-                position: "top-right",
-                autoClose: 3000,
-                theme: "colored",
-                transition: Slide
-            });
+            alertSuccess('Successful')
         }
         dispatch(replace(ROUTES.user))
     }

@@ -8,15 +8,16 @@ import Cookies from 'js-cookie';
 export function fetchThunk(
   url: string,
   method: 'get' | 'post' | 'delete' | 'put' = 'get',
-  body?: object | FormData,
+  body?: any,
   auth = true,
   contentType?: string,
+  isFormdata?:boolean
 ): ThunkAction<Promise<any>, AppState, null, Action<string>> {
   return async (dispatch, getState) => {
     const res = await fetch(url, {
       credentials: 'include',
       method,
-      body: typeof body === 'object' ? JSON.stringify(body) : JSON.stringify(body),
+      body: isFormdata ? body :JSON.stringify(body),
       headers:
         contentType !== 'multipart/form-data'
           ? {
@@ -24,7 +25,7 @@ export function fetchThunk(
             Authorization: Cookies.get(ACCESS_TOKEN_KEY) || '',
           }
           : {
-
+            Authorization: Cookies.get(ACCESS_TOKEN_KEY) || '',
           },
       cache: 'no-store',
     });

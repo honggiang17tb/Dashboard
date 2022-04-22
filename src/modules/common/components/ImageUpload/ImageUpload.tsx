@@ -4,10 +4,11 @@ import ImageUploading, { ImageListType } from "react-images-uploading";
 
 interface Props {
     data?: any
-    setValueUpdate: any
+    setValueUpdate?: any
+    setFile?:any
 }
 
-export function ImageUpload({ data, setValueUpdate }: Props) {
+export function ImageUpload({ data, setValueUpdate,setFile }: Props) {
     const [images, setImages] = React.useState<ImageListType>(data);
     const maxNumber = 100;
 
@@ -16,22 +17,24 @@ export function ImageUpload({ data, setValueUpdate }: Props) {
         addUpdateIndex: number[] | undefined
     ) => {
         // Data for submit
-
-        console.log('image',imageList);
-        console.log('i' , addUpdateIndex);
-        
         setImages(imageList as never[]);
     };
-
+    
+    
 
     useEffect(() => {
         setValueUpdate((prev: any) => {
             return { ...prev, imagesOrder: images.map((item) => { return typeof (item.file) == 'object' ? item.file.name : item.file }) }
         })
-
+        const listFile:any = []
+        images.forEach((x:any,i:any)=>{
+           typeof(x.file) === 'object' ? listFile.push({file:x.file,order:i}) : null
+        })
+        setFile(listFile)
+        
     }, [images])
 
-    
+
 
     return (
         <div className="upload__image">
@@ -56,7 +59,9 @@ export function ImageUpload({ data, setValueUpdate }: Props) {
                                 <div className="image-item__btn-wrapper">
 
                                     <i className="fa fa-times-circle" onClick={() => {
-                                        console.log(image.id);
+                                        setValueUpdate((prev: any) => {
+                                            return { ...prev, deleted_images: [...prev.deleted_images,+image.id] }
+                                        })
                                         onImageRemove(index)
                                     }}
                                     ></i>

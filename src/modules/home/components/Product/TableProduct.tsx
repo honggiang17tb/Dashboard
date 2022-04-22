@@ -1,20 +1,17 @@
-import React, { useEffect, useState } from "react";
 import { replace } from 'connected-react-router';
-import { Slide, toast } from 'react-toastify';
 import moment from 'moment';
-
+import React, { useEffect, useState } from "react";
 import { useDispatch } from 'react-redux';
 import { ThunkDispatch } from "redux-thunk";
 import { Action } from "typesafe-actions";
 import { API_PROJECT } from "../../../../configs/api";
 import { ROUTES } from "../../../../configs/routes";
 import { AppState } from "../../../../redux/reducer";
-import { fetchThunk } from "../../../common/redux/thunk";
-import Modal from "../../../common/components/Modal/Modal";
-import Loading from "../../../common/components/Loading/Loading";
+import { alertSuccess } from "../../../../utils/helper";
 import Editable from "../../../common/components/Editable/Editable";
-
-
+import Loading from "../../../common/components/Loading/Loading";
+import Modal from "../../../common/components/Modal/Modal";
+import { fetchThunk } from "../../../common/redux/thunk";
 
 interface Props {
     id: string,
@@ -164,12 +161,7 @@ const TableProduct = (props: DataProps) => {
         );
 
         if (info.success) {
-            toast.success('Successful', {
-                position: "top-right",
-                autoClose: 3000,
-                theme: "colored",
-                transition: Slide
-            });
+            alertSuccess('Successful')
         }
         getData()
         setOpenModal_Enable(false)

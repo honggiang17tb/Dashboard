@@ -23,28 +23,30 @@ export const API_PATHS = {
   userProfile: `${getBaseUrl(APIService.public)}/user`,
 };
 
+const baseURL  = 'https://api.gearfocus.div4.pgtest.co'
+
 export const API_PROJECT = {
-  login : `https://api.gearfocus.div4.pgtest.co/api/authentication/login`,
-  categories : `https://api.gearfocus.div4.pgtest.co/api/categories/list`,
-  brands : `https://api.gearfocus.div4.pgtest.co/apiAdmin/brands/list`,
-  country : `https://api.gearfocus.div4.pgtest.co/apiAdmin/commons/country`,
-  state:`https://api.gearfocus.div4.pgtest.co/apiAdmin/commons/state`,
-  vendor : `https://api.gearfocus.div4.pgtest.co/apiAdmin/vendors/list`,
-  shipping:`https://api.gearfocus.div4.pgtest.co/apiAdmin/shipping/list`,
-  condition:`https://api.gearfocus.div4.pgtest.co/apiAdmin/conditions/list`,
-  upload_image:`https://api.gearfocus.div4.pgtest.co/api/products/upload-image`,
+  login : `${baseURL}/api/authentication/login`,
+  categories : `${baseURL}/api/categories/list`,
+  brands : `${baseURL}/apiAdmin/brands/list`,
+  country : `${baseURL}/apiAdmin/commons/country`,
+  state:`${baseURL}/apiAdmin/commons/state`,
+  vendor : `${baseURL}/apiAdmin/vendors/list`,
+  shipping:`${baseURL}/apiAdmin/shipping/list`,
+  condition:`${baseURL}/apiAdmin/conditions/list`,
+  upload_image:`${baseURL}/api/products/upload-image`,
 
-  userList : `https://api.gearfocus.div4.pgtest.co/apiAdmin/users/list`,
-  userCreate:`https://api.gearfocus.div4.pgtest.co/apiAdmin/users/create`,
-  userDetails:`https://api.gearfocus.div4.pgtest.co/apiVendor/profile/detail`,
-  userUpdate:`https://api.gearfocus.div4.pgtest.co/apiAdmin/users/edit`,
-  userDelete:`https://api.gearfocus.div4.pgtest.co/apiAdmin/users/edit`,
+  userList : `${baseURL}/apiAdmin/users/list`,
+  userCreate:`${baseURL}/apiAdmin/users/create`,
+  userDetails:`${baseURL}/apiVendor/profile/detail`,
+  userUpdate:`${baseURL}/apiAdmin/users/edit`,
+  userDelete:`${baseURL}/apiAdmin/users/edit`,
 
-  productList:`https://api.gearfocus.div4.pgtest.co/api/products/list`,
-  productDetails:`https://api.gearfocus.div4.pgtest.co/apiAdmin/products/detail`,
-  productCreate:`https://api.gearfocus.div4.pgtest.co/apiAdmin/products/create`,
-  productUpdate:`https://api.gearfocus.div4.pgtest.co/apiAdmin/products/create`,
-  productDelete:`https://api.gearfocus.div4.pgtest.co/apiAdmin/products/edit`,
-  productEdit:`https://api.gearfocus.div4.pgtest.co/apiAdmin/products/edit`,
+  productList:`${baseURL}/api/products/list`,
+  productDetails:`${baseURL}/apiAdmin/products/detail`,
+  productCreate:`${baseURL}/apiAdmin/products/create`,
+  productUpdate:`${baseURL}/apiAdmin/products/create`,
+  productDelete:`${baseURL}/apiAdmin/products/edit`,
+  productEdit:`${baseURL}/apiAdmin/products/edit`,
 
 }

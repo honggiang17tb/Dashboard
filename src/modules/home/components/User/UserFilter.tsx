@@ -1,12 +1,12 @@
-import React, { useCallback, useEffect, useState } from "react";
-import Select from "../../../common/components/Select/Select";
-import { useSelector, useDispatch } from "react-redux";
-import { fetchThunk } from "../../../common/redux/thunk";
-import { API_PROJECT } from "../../../../configs/api";
-import { ThunkDispatch } from "redux-thunk";
-import { AppState } from "../../../../redux/reducer";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Action } from "redux";
+import { ThunkDispatch } from "redux-thunk";
+import { API_PROJECT } from "../../../../configs/api";
+import { AppState } from "../../../../redux/reducer";
 import { storeSelector } from "../../../../redux/selector";
+import Select from "../../../common/components/Select/Select";
+import { fetchThunk } from "../../../common/redux/thunk";
 
 
 interface Props {

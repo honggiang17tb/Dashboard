@@ -1,15 +1,15 @@
-import React, { useEffect, useState, useCallback } from "react";
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useCallback, useEffect, useState } from "react";
+import { replace } from 'connected-react-router';
+import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router';
 import { Action } from 'redux';
 import { ThunkDispatch } from 'redux-thunk';
 import { API_PROJECT } from '../../../configs/api';
-import { AppState } from '../../../redux/reducer';
-import { fetchThunk } from '../../common/redux/thunk';
 import { ROUTES } from '../../../configs/routes';
-import { replace } from 'connected-react-router';
-import Tab from '../../common/components/Tab/Tab';
+import { AppState } from '../../../redux/reducer';
 import Loading from "../../common/components/Loading/Loading";
+import Tab from '../../common/components/Tab/Tab';
+import { fetchThunk } from '../../common/redux/thunk';
 import InfoProduct from "../components/ProductDetails/InfoProduct";
 
 
@@ -33,7 +33,7 @@ const ProductDetails = () => {
 
     useEffect(() => {
         getData()
-    }, [getData])
+    }, [])
 
 
     const tabItems = [

@@ -3,13 +3,13 @@ import JoditEditor from "jodit-react";
 
 
 interface Props{
-    value:any
+    value?:any
     onBlur?:any
 }
 const TextEditor = (props:Props) => {
     const {value,onBlur} = props
     const editor = useRef(null)
-    const [content, setContent] = useState(value)
+    const [content, setContent] = useState(value || '')
     
     useEffect(()=>{
         onBlur(content)

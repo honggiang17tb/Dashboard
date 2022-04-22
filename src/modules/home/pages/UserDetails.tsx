@@ -57,7 +57,7 @@ const UserDetails = () => {
 
     useEffect(() => {
         getData()
-    }, [getData])
+    }, [])
 
     return (
         <div className="user-detail">

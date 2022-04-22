@@ -57,13 +57,11 @@ const LoginForm = (props: Props) => {
           className="form-control"
           id="inputEmail"
           value={formValues.email}
+          placeholder='Email'
           onChange={(e) => {
             setFormValues({ ...formValues, email: e.target.value })
-            setValidate(validate=>{
-              return {email:'',password:validate?.password}
-            })
           }}
-          placeholder='Email'
+          onFocus={()=>{setValidate({email:'',password:''})}}
           onBlur={() => {
             const validEmail= validateEmail(formValues.email)
             setValidate(validate=>{
@@ -85,14 +83,12 @@ const LoginForm = (props: Props) => {
           type="password"
           className="form-control"
           id="inputPassword"
+          placeholder='Password'
           value={formValues.password}
           onChange={(e) => {
             setFormValues({ ...formValues, password: e.target.value })
-            setValidate(validate=>{
-              return {email:validate?.email,password:''}
-            })
           }}
-          placeholder='Password'
+          onFocus={()=>{setValidate({email:'',password:''})}}
           onBlur={() => {
             const validPassword = validatePassword(formValues.password)
             setValidate(validate=>{
