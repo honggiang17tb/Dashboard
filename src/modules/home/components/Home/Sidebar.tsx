@@ -1,8 +1,7 @@
-import { replace } from 'connected-react-router';
-import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { ROUTES } from '../../../../configs/routes';
-
+import React, { useEffect, useState } from 'react';
+import { useLocation } from 'react-router';
+import MENU from '../../../../configs/menu';
+import { Menu, SMenu } from './Menu';
 
 interface Props {
     checked: boolean
@@ -11,9 +10,21 @@ interface Props {
 
 function Sidebar(props: Props) {
     const { checked, setChecked } = props
-    const dispatch = useDispatch()
-    const [activeUser, setActiveUser] = useState('active')
-    const [activePro, setActivePro] = useState('')
+    const location = useLocation()
+    const [active, setActive] = useState<number>()
+
+    
+    useEffect(() => {
+        for (let i = 0; i <= MENU.length; i++) {
+            for (let j = 0; j <= MENU[i]?.submenus?.length; j++) {
+                if(MENU[i].submenus[j]?.path === location.pathname){
+                    setActive(MENU[i].submenus[j].parent_id)
+                }
+            }
+        }
+
+    }, [])
+
 
     const handleToggle = (e: any) => {
 
@@ -32,70 +43,16 @@ function Sidebar(props: Props) {
 
         <div className="sidebar">
             <ul className='sidebar_menu'>
-                <li className={`item`} onClick={handleToggle}>
-                    <a>
-                        <i className="fa-solid fa-inbox"></i>
-                        <span>Orders</span>
-                        <i className="fa-solid fa-angle-left icon-angle-left"></i>
-                        <i className="fa-solid fa-angle-down icon-angle-down"></i>
-                    </a>
-
-                    <ul className="sub_menu">
-
-                    </ul>
-                </li>
-                <li className={`item`} onClick={handleToggle}>
-                    <a className={activePro}>
-                        <i className="fa-solid fa-tag"></i>
-                        <span>Catalog</span>
-                        <i className="fa-solid fa-angle-left icon-angle-left"></i>
-                        <i className="fa-solid fa-angle-down icon-angle-down"></i>
-                    </a>
-
-                    <ul className="sub_menu">
-                        <li>
-                            <a className={activePro}
-                                onClick={() => {
-                                setActiveUser('')
-                                setActivePro('active')
-                                dispatch(replace(ROUTES.product))
-                            }}>Products</a>
-                        </li>
-
-
-                    </ul>
-                </li>
-                <li className={`item`} onClick={handleToggle}>
-                    <a className={activeUser}>
-                        <i className="fa-solid fa-user-group"></i>
-                        <span>User</span>
-                        <i className="fa-solid fa-angle-left icon-angle-left"></i>
-                        <i className="fa-solid fa-angle-down icon-angle-down"></i>
-                    </a>
-
-                    <ul className="sub_menu">
-                        <li>
-                            <a className={activeUser} onClick={() => {
-                                setActiveUser('active')
-                                setActivePro('')
-                                dispatch(replace(ROUTES.user))
-                            }}>User list</a>
-                        </li>
-                    </ul>
-                </li>
-                <li className={`item`} onClick={handleToggle}>
-                    <a >
-                        <i className="fa-solid fa-globe"></i>
-                        <span>Sales channels</span>
-                        <i className="fa-solid fa-angle-left icon-angle-left"></i>
-                        <i className="fa-solid fa-angle-down icon-angle-down"></i>
-                    </a>
-
-                    <ul className="sub_menu">
-
-
-                    </ul>
-                </li>
+                {MENU.map((menu) => {
+                    const { id, key, title, icon } = menu
+                    return (
+                        <Menu key={key} title={title} icon={icon} onClick={handleToggle} isActive={active === id}>
+                            {menu.submenus.map((x) => {
+                                return <SMenu key={x.key} to={x.path} title={x.title} onClick={() => setActive(x.parent_id)} />
+                            })}
+                        </Menu>
+                    )
+                })}
 
             </ul>
         </div>

@@ -1,16 +1,16 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import { useDispatch } from 'react-redux';
 import { replace } from 'connected-react-router';
-import { ROUTES } from '../../../configs/routes';
-import ProductFilter from '../components/Product/ProductFilter'
-import { ThunkDispatch } from 'redux-thunk';
-import { AppState } from '../../../redux/reducer';
-import { Action } from 'redux';
-import { fetchThunk } from '../../common/redux/thunk';
-import { API_PROJECT } from '../../../configs/api';
-import TableProduct from '../components/Product/TableProduct';
-import Modal from '../../common/components/Modal/Modal';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import ReactPaginate from 'react-paginate';
+import { useDispatch } from 'react-redux';
+import { Action } from 'redux';
+import { ThunkDispatch } from 'redux-thunk';
+import { API_PROJECT } from '../../../configs/api';
+import { ROUTES } from '../../../configs/routes';
+import { AppState } from '../../../redux/reducer';
+import Modal from '../../common/components/Modal/Modal';
+import { fetchThunk } from '../../common/redux/thunk';
+import ProductFilter from '../components/Product/ProductFilter';
+import TableProduct from '../components/Product/TableProduct';
 import '../css/Pages.css';
 
 
@@ -40,7 +40,8 @@ const ProductPage = () => {
       order_by: "ASC",
       search_type: ""
     })
-
+  const ref = useRef<HTMLDivElement | null>(null)
+  const [scrollX, setScrollX] = useState(0)
 
   const getData = useCallback(async () => {
     setLoading(true)
@@ -66,7 +67,7 @@ const ProductPage = () => {
       setData([])
     }
     setLoading(false)
-  }, [valueSearch])
+  }, [valueSearch, dispatch])
 
   const confirmRemove = async () => {
     setLoading(true)
@@ -83,6 +84,22 @@ const ProductPage = () => {
   const confirmExport = () => {
 
   }
+
+  const onScroll = (e: any) => {
+    const scrolltWidth = e.target.scrollWidth
+    const clientWidth = e.target.clientWidth
+    const canScroll = scrolltWidth - clientWidth
+    const scrolled = e.target.scrollLeft / canScroll
+    setScrollX(scrolled)
+  }
+  useEffect(() => {
+    let canScroll = 0
+    if(ref.current && scrollX){
+        canScroll = ref.current?.scrollWidth - ref.current?.clientWidth
+        const x = canScroll*scrollX
+        ref.current.scrollLeft = x
+    }
+  }, [scrollX])
 
   useEffect(() => {
     getData()
@@ -117,7 +134,7 @@ const ProductPage = () => {
       >
         Add Product
       </button>
-      <div style={{ overflowX: 'auto' }}>
+      <div className='table-scroll' ref={ref}>
         <TableProduct datas={data}
           loading={loading}
           setValueDelete={setValueDelete}
@@ -157,7 +174,7 @@ const ProductPage = () => {
       </div>
 
 
-      <div className="above-scroller">
+      <div className="above-scroller" onScroll={onScroll}>
         <div style={{ width: '1600px', height: "20px" }}></div>
       </div>
       <div className="sticky-panel">

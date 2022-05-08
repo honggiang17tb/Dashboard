@@ -47,7 +47,6 @@ const TableProduct = (props: DataProps) => {
 
 
 
-
     const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
         if (event.target.checked) {
             const newSelecteds = datas?.map((data) => data.id);
@@ -173,11 +172,11 @@ const TableProduct = (props: DataProps) => {
                 return { id: item, delete: 1 }
             })
         })
-    }, [selectDelete])
+    }, [selectDelete,setValueDelete])
 
     useEffect(() => {
         setValueExport(selected)
-    }, [selected])
+    }, [selected,setValueExport])
 
     return (
         <>

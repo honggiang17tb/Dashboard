@@ -1,18 +1,18 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { replace } from 'connected-react-router';
+import React, { useCallback, useEffect, useState } from 'react';
+import ReactPaginate from 'react-paginate';
 import { useDispatch } from 'react-redux';
 import { Action } from 'redux';
-import { replace } from 'connected-react-router';
 import { ThunkDispatch } from 'redux-thunk';
 import { API_PROJECT } from '../../../configs/api';
+import { ROUTES } from '../../../configs/routes';
 import { AppState } from '../../../redux/reducer';
+import Modal from '../../common/components/Modal/Modal';
 import { fetchThunk } from '../../common/redux/thunk';
 import TableUser from '../components/User/TableUser';
 import UserFilter from '../components/User/UserFilter';
-import { ROUTES } from '../../../configs/routes';
-import Modal from '../../common/components/Modal/Modal';
-import ReactPaginate from 'react-paginate';
-
 import '../css/Pages.css';
+
 
 
 function UserPage() {
@@ -20,9 +20,10 @@ function UserPage() {
     const [loading, setLoading] = useState(false)
     const [openModal, setOpenModal] = useState(false)
     const [valueDelete, setValueDelete] = useState({ "params": [] })
+    const [x,setX] = useState(0)
 
-    const [record,setRecord] = useState<any>()
-    const [totalPage,setTotalPage] = useState<any>()
+    const [record, setRecord] = useState<any>()
+    const [totalPage, setTotalPage] = useState<any>()
     const [valueSearch, setValueSearch] = useState({
         "page": 1,
         "count": 10,
@@ -44,6 +45,7 @@ function UserPage() {
         "order_by": "DESC",
         "tz": 7
     })
+
 
     const dispatch = useDispatch<ThunkDispatch<AppState, null, Action<string>>>();
     const getData = useCallback(async () => {
@@ -69,7 +71,7 @@ function UserPage() {
             setLoading(false)
         }
 
-    }, [valueSearch])
+    }, [valueSearch, dispatch])
 
     const confirmRemove = async () => {
         setLoading(true)
@@ -81,6 +83,14 @@ function UserPage() {
         }
         setOpenModal(false)
         getData()
+    }
+
+    const onScroll = (e: any) => {
+        const scrolltWidth = e.target.scrollWidth
+        const clientWidth = e.target.clientWidth
+        const canScroll = scrolltWidth - clientWidth
+        const scrolled = e.target.scrollLeft / canScroll
+        setX(scrolled)
     }
 
     useEffect(() => {
@@ -98,7 +108,7 @@ function UserPage() {
                 />}
             <h2 style={{ fontSize: '2rem', lineHeight: '2.5rem', marginBottom: '16px' }}>Search for users</h2>
 
-            <UserFilter setValueSearch={setValueSearch} valueSearch={valueSearch}/>
+            <UserFilter setValueSearch={setValueSearch} valueSearch={valueSearch} />
 
             <button type='button'
                 className='btn btn-default mb-4'
@@ -107,11 +117,11 @@ function UserPage() {
                 Add User
             </button>
 
-            <TableUser datas={data} loading={loading} setValueDelete={setValueDelete} setValueSearch={setValueSearch}/>
+            <TableUser datas={data} loading={loading} setValueDelete={setValueDelete} setValueSearch={setValueSearch} scrolled={x}/>
 
             <div className="pagination">
                 <ReactPaginate
-                    pageCount={Math.ceil(totalPage/record)}
+                    pageCount={Math.ceil(totalPage / record)}
                     pageRangeDisplayed={5}
                     marginPagesDisplayed={1}
                     previousLabel={<i className="fa-solid fa-angles-left icon-angles"></i>}
@@ -124,7 +134,7 @@ function UserPage() {
                         className='mx-2'
                         defaultValue={valueSearch.count}
                         onChange={(e) => {
-                            setValueSearch({ ...valueSearch, count:+e.target.value })
+                            setValueSearch({ ...valueSearch, count: +e.target.value })
                             setRecord(+e.target.value)
                         }}
                     >
@@ -138,7 +148,7 @@ function UserPage() {
                 </div>
             </div>
 
-            <div className="above-scroller">
+            <div onScroll={onScroll} className="above-scroller">
                 <div style={{ width: '1600px', height: "20px" }}></div>
             </div>
             <div className="sticky-panel">

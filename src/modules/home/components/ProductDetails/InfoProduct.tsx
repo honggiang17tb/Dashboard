@@ -130,6 +130,20 @@ const InfoProduct = ({ data }: Props) => {
       value: data.id,
     };
   });
+
+  const getCategory = () => {
+    const arr: any = []
+    payload.categories.forEach((x: any) => {
+      state?.payload?.category?.forEach((data: any, index: any) => {
+        if (data.id === x.category_id) {
+          arr.push(index)
+        }
+      })
+    })    
+    return arr
+  }
+
+
   const list_membership = [{ title: 'General', value: 4 }];
   const list_zone = state?.payload?.shipping?.map((data: any) => {
     return {
@@ -241,6 +255,7 @@ const InfoProduct = ({ data }: Props) => {
             </label>
             <div className="col-md-4 px-3">
               <MultipleSelect
+                defaultSelect={getCategory()}
                 data={list_category}
                 placeholder="Type Vendor name to select"
                 onChange={(value) => {

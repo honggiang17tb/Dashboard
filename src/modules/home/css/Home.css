@@ -340,5 +340,11 @@ body{
   position: fixed;
   width: calc(100vw - 16rem - 3.8*1.25rem);
   bottom: 0;
+  cursor: pointer;
 }
-
+.table-scroll{
+  overflow-x: auto;
+}
+.table-scroll::-webkit-scrollbar { 
+  display: none; 
+}

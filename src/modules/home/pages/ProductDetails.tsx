@@ -29,11 +29,11 @@ const ProductDetails = () => {
             setData(json)
         }
         setLoading(false)
-    }, [params])
+    }, [params,dispatch])
 
     useEffect(() => {
         getData()
-    }, [])
+    }, [getData])
 
 
     const tabItems = [

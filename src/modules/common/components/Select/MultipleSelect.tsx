@@ -6,11 +6,11 @@ interface Props {
     placeholder?: string
     checkbox?: boolean
     defaultSelect?: any[]
-    onChange? : (value:any)=>void
+    onChange?: (value: any) => void
 
 }
 
-const MultipleSelect = ({ data, placeholder, checkbox, defaultSelect,onChange }: Props) => {
+const MultipleSelect = ({ data, placeholder, checkbox, defaultSelect, onChange }: Props) => {
     const [open, setOpen] = useState(false)
     const [selected, setSelected] = useState(defaultSelect || [])
     const [selectTitle, setSelectTitle] = useState<Array<any>>([])
@@ -40,9 +40,7 @@ const MultipleSelect = ({ data, placeholder, checkbox, defaultSelect,onChange }:
                 selected.slice(selectedIndex + 1),
             );
         }
-
         setSelected(newSelected);
-
     }
 
 
@@ -51,15 +49,19 @@ const MultipleSelect = ({ data, placeholder, checkbox, defaultSelect,onChange }:
     }
 
     useEffect(() => {
-        const title = selected.map((select, index) => {
-            return data[index].title
+        const title = selected.map((select) => {
+            return {
+                index: select,
+                title: data[select].title
+            }
         })
-        const value = selected.map((select, index) => {
-            return data[index].value
+        const value = selected.map((select) => {
+            return data[select].value
         })
         setSelectTitle(title);
         setSelectValue(value);
-    }, [selected])
+
+    }, [selected])    
 
     const handleChange = () => {
         onChange ? onChange(selectValue) : null
@@ -73,11 +75,11 @@ const MultipleSelect = ({ data, placeholder, checkbox, defaultSelect,onChange }:
             <button className='multiple-select-custom'>
                 <div className='select-input' onClick={handleOpen}>
                     {selectTitle.length > 0 ?
-                        selectTitle.map((title, index) => {
+                        selectTitle.map((x, index) => {
                             return (
                                 <div className="option-view" key={index}>
-                                    <span>{title}</span>
-                                    <span className="icon-xmark" onClick={(e) => handleSelect(e, index)}><i className="fa-solid fa-xmark"></i></span>
+                                    <span>{x.title}</span>
+                                    <span className="icon-xmark" onClick={(e) => handleSelect(e, x.index)}><i className="fa-solid fa-xmark"></i></span>
                                 </div>
                             )
                         })

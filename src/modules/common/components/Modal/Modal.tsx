@@ -1,5 +1,5 @@
-import React, { useState, useRef, useEffect } from "react";
-import css from './Modal.module.css'
+import React, { useEffect } from "react";
+import css from './Modal.module.css';
 
 
 interface Props {

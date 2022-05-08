@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
-import { ROUTES } from "../../../../configs/routes";
-import { useDispatch } from 'react-redux';
 import { replace } from 'connected-react-router';
-import moment from 'moment'
+import moment from 'moment';
+import React, { useEffect, useRef, useState } from "react";
+import { useDispatch } from 'react-redux';
+import { ROUTES } from "../../../../configs/routes";
 import Loading from "../../../common/components/Loading/Loading";
 
 interface Props {
@@ -22,14 +22,16 @@ interface DataProps {
     loading: boolean
     setValueDelete: React.Dispatch<React.SetStateAction<any>>
     setValueSearch: React.Dispatch<React.SetStateAction<any>>
+    scrolled?:number
 }
 const TableUser = (props: DataProps) => {
-    const { datas, loading, setValueDelete, setValueSearch } = props
+    const { datas, loading, setValueDelete, setValueSearch,scrolled } = props
 
     const dispatch = useDispatch()
     const [selected, setSelected] = React.useState<readonly string[]>([]);
     const [sortByVendor, setSortByVendor] = useState('')
     const [sortByName, setSortByName] = useState('')
+    const ref = useRef<HTMLDivElement | null>(null)
 
     const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
         if (event.target.checked) {
@@ -116,16 +118,25 @@ const TableUser = (props: DataProps) => {
 
     }
 
+    useEffect(()=>{
+        let canScroll = 0
+        if(ref.current && scrolled){
+            canScroll = ref.current?.scrollWidth - ref.current?.clientWidth
+            const x = canScroll*scrolled
+            ref.current.scrollLeft = x
+        }
+    },[scrolled])
+
     useEffect(() => {
         setValueDelete({
             params: selected.map((item) => {
                 return { id: item, delete: 1 }
             })
         })
-    }, [selected])
+    }, [selected,setValueDelete])
 
     return (
-        <div style={{ overflowX: 'auto' }}>
+        <div ref={ref} className='table-scroll'>
             <table className="table-list">
                 <thead>
                     <tr>

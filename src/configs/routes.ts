@@ -7,4 +7,6 @@ export const ROUTES = {
   product:'/home/pages/products/manage-product',
   product_detail:'/home/page/products/product-detail',
   product_create:'/home/pages/products/new-product',
+  brand:'/home/pages/brand/manage-brand',
+  reviews:'/home/pages/reviews',
 };

@@ -1,15 +1,15 @@
-import React, { useEffect, useState, useCallback } from "react";
-import { useDispatch, useSelector } from 'react-redux';
+import { replace } from 'connected-react-router';
+import React, { useCallback, useEffect, useState } from "react";
+import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router';
 import { Action } from 'redux';
 import { ThunkDispatch } from 'redux-thunk';
 import { API_PROJECT } from '../../../configs/api';
-import { AppState } from '../../../redux/reducer';
-import { fetchThunk } from '../../common/redux/thunk';
 import { ROUTES } from '../../../configs/routes';
-import { replace } from 'connected-react-router';
-import Tab from '../../common/components/Tab/Tab';
+import { AppState } from '../../../redux/reducer';
 import Loading from "../../common/components/Loading/Loading";
+import Tab from '../../common/components/Tab/Tab';
+import { fetchThunk } from '../../common/redux/thunk';
 import InfoUser from "../components/UserDetails/InfoUser";
 
 
@@ -53,11 +53,11 @@ const UserDetails = () => {
             setData(json)
         }
         setLoading(false)
-    }, [params])
+    }, [params,dispatch])
 
     useEffect(() => {
         getData()
-    }, [])
+    }, [getData])
 
     return (
         <div className="user-detail">
